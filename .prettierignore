@@ -1,0 +1,13 @@
+node_modules
+build
+.next
+backend/node_modules
+frontend/node_modules
+backend/build
+frontend/build
+backend/dist
+frontend/dist
+docker-compose.yml
+Dockerfile
+backend/Dockerfile
+frontend/Dockerfile
