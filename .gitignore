@@ -1,73 +1,75 @@
-# # Compiled output
-# /dist
-# /build
-# /.next
-# /out
+# Compiled output
+/dist
+/build
+/.next
+/out
 
-# # Dependencies
-# /node_modules
-# /.pnp
-# .pnp.js
-# .yarn/install-state.gz
+# Dependencies
+/node_modules
+/backend/node_modules/
+/frontend/node_modules/
+/.pnp
+.pnp.js
+.yarn/install-state.gz
 
-# # Logs
-# logs
-# *.log
-# npm-debug.log*
-# pnpm-debug.log*
-# yarn-debug.log*
-# yarn-error.log*
-# lerna-debug.log*
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-# # OS
-# .DS_Store
+# OS
+.DS_Store
 
-# # Tests
-# /coverage
-# /.nyc_output
+# Tests
+/coverage
+/.nyc_output
 
-# # IDEs and editors
-# /.idea
-# .project
-# .classpath
-# .c9/
-# *.launch
-# .settings/
-# *.sublime-workspace
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# # IDE - VSCode
-# .vscode/*
-# !.vscode/settings.json
-# !.vscode/tasks.json
-# !.vscode/launch.json
-# !.vscode/extensions.json
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# # dotenv environment variable files
-# .env
-# .env.development.local
-# .env.test.local
-# .env.production.local
-# .env.local
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
-# # Temp directory
-# .temp
-# .tmp
+# Temp directory
+.temp
+.tmp
 
-# # Runtime data
-# pids
-# *.pid
-# *.seed
-# *.pid.lock
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# # Diagnostic reports (https://nodejs.org/api/report.html)
-# report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-# # Misc
-# *.pem
+# Misc
+*.pem
 
-# # Vercel
-# .vercel
+# Vercel
+.vercel
 
-# # TypeScript
-# *.tsbuildinfo
-# next-env.d.ts
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
