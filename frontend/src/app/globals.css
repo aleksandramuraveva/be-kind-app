@@ -5,19 +5,23 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brown: #3C2622;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
   }
 }
 
 body {
-  color: var(--foreground);
+  color: var(--brown);
   background: var(--background);
   font-family: var(--font-open-sans),Arial, Helvetica, sans-serif;
+background: rgb(239,163,238);
+background: linear-gradient(90deg, rgba(239,163,238,1) 0%, rgba(243,186,237,1) 40%, rgba(235,192,242,0.9958916672137605) 100%);
 }
 
 @layer utilities {
