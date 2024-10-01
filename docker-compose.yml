@@ -1,23 +1,28 @@
 services:
   backend:
     build: ./backend
+    container_name: backend-development
     ports:
-      - "5000:3000"
+      - "4000:4000"
     environment:
-      - NODE_ENV=production
-      - DATABASE_HOST=db
-      - DATABASE_PORT=5432
-      - DATABASE_USER=bekinduser
-      - DATABASE_PASSWORD=bekindpassword
-      - DATABASE_NAME=bekinddb
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
       - db
+    volumes:
+      - ~/be-kind-app/backend:/usr/src/app
+    env_file:
+      - ~/be-kind-app/backend/.env
   frontend:
     build: ./frontend
+    container_name: frontend-development
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ~/be-kind-app/frontend:/usr/src/app
   db:
     image: postgres:latest
     environment:
@@ -30,3 +35,4 @@ services:
       - postgres_data:/var/lib/postgresql/data
 volumes:
   postgres_data:
+

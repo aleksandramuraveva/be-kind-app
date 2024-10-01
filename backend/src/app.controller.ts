@@ -12,6 +12,6 @@ export class AppController {
 
   @Get('test')
   getTest(): string {
-  	return "Connection works!";
+    return 'Connection works!';
   }
 }
