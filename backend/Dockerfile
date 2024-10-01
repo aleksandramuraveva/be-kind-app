@@ -1,23 +1,15 @@
-# Use an official Node.js runtime as a parent image
 FROM node:20.10.0
 
-# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
 COPY . .
 
-# Build the application
-RUN npm run build
+EXPOSE 4000
 
-# Expose the port the app runs on
-EXPOSE 3000
+CMD ["npm", "run", "start:dev"]
 
-# Command to run the application
-CMD ["npm", "run", "start:prod"]
+
