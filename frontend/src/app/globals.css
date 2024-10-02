@@ -20,8 +20,9 @@ body {
   color: var(--brown);
   background: var(--background);
   font-family: var(--font-open-sans),Arial, Helvetica, sans-serif;
-background: rgb(239,163,238);
-background: linear-gradient(90deg, rgba(239,163,238,1) 0%, rgba(243,186,237,1) 40%, rgba(235,192,242,0.9958916672137605) 100%);
+  background: rgb(239,163,238);
+  background: linear-gradient(90deg, rgba(239,163,238,1) 0%, rgba(243,186,237,1) 40%, rgba(235,192,242,0.9958916672137605) 100%);
+  background-image: url("../images/bg.jpg");
 }
 
 @layer utilities {
