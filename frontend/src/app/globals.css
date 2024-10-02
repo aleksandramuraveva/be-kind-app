@@ -6,6 +6,8 @@
   --background: #ffffff;
   --foreground: #171717;
   --brown: #3C2622;
+  --pink: #F389B2;
+  --blue:  #8D96ED;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,9 +22,39 @@ body {
   color: var(--brown);
   background: var(--background);
   font-family: var(--font-open-sans),Arial, Helvetica, sans-serif;
-background: rgb(239,163,238);
-background: linear-gradient(90deg, rgba(239,163,238,1) 0%, rgba(243,186,237,1) 40%, rgba(235,192,242,0.9958916672137605) 100%);
+  background: rgb(239,163,238);
+  background: linear-gradient(90deg, rgba(239,163,238,1) 0%, rgba(243,186,237,1) 40%, rgba(235,192,242,0.9958916672137605) 100%);
+  background-image: url("../images/bg.jpg");
 }
+
+.ribbon {
+  line-height: 34px;
+}
+
+.ribbon:hover {
+  top: -4px;
+}
+
+.ribbon:before,
+.ribbon:after {
+  content: '';
+  position: absolute;
+  top: 13px;
+  z-index: -10;
+  border-style: solid;
+  border-width: 17px;
+}
+
+.ribbon:before {
+  border-color: #8D96ED #8D96ED #8D96ED transparent;
+  left: -25px;
+}
+
+.ribbon:after {
+  border-color: #8D96ED transparent #8D96ED #8D96ED;
+  right: -25px;
+}
+
 
 @layer utilities {
   .text-balance {
