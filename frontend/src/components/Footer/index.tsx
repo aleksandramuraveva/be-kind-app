@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-400 text-white py-4">
+    <footer className="bg-my-blue text-white py-2">
       <div className="container mx-auto flex justify-center items-center">
         <a
           href="https://github.com/aleksandramuraveva"
