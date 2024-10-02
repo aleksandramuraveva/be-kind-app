@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${openSans.variable} flex flex-col min-h-screen bg-cover bg-no-repeat bg-fixed`}>
         <div className="fixed inset-0 bg-pink-400 opacity-50"></div>
-        <div className="relative z-10">
+        <div className="relative z-10 flex flex-col min-h-screen">
           <Header />
           <main className="flex-grow">{children}</main>
           <Footer />
