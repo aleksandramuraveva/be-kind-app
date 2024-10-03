@@ -10,8 +10,8 @@ const Dashboard = ({ friendName }) => {
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <img src="/images/wings.png" alt="Wings" className="filter brightness-110" />
       </div>
-      <div className="text-center mb-4 mt-6">
-        <h2 className="text-shadow3 text-my-blue text-xl font-bold">{title}</h2>
+      <div className="text-center mb-3 mt-8">
+        <h2 className="text-shadow text-white text-3xl font-bold">{title}</h2>
       </div>
       <GoodDeedsList />
     </section>
