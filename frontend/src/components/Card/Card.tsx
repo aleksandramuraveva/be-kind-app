@@ -1,7 +1,7 @@
 const Card = () => {
   return (
-    <div className="relative block min-w-[300px] max-w-[300px] min-h-[150px] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-      <p className="font-extrabold text-my-pink font-normal text-gray-700 dark:text-gray-400 break-words py-3">
+    <div className="relative block min-w-[250px] max-w-[300px] min-h-[150px] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
+      <p className="tracking-wider font-extrabold text-my-pink font-normal text-gray-700 dark:text-gray-400 break-words py-3">
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
       </p>
       <button className="absolute top-3 right-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
