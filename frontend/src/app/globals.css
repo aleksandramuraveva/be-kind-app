@@ -27,6 +27,18 @@ body {
   background-image: url("../images/bg.jpg");
 }
 
+.text-shadow {
+  text-shadow: 2px 1.5px 3px var(--blue);
+}
+
+.text-shadow2 {
+  text-shadow: 0.3px 0.3px 0.5px var(--blue);
+}
+
+.text-shadow3 {
+  text-shadow: 1px 0.7px 4px white;
+}
+
 .ribbon {
   line-height: 34px;
 }
