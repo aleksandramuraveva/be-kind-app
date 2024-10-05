@@ -1,13 +1,14 @@
-import FriendItem from "./FriendItem/FriendItem"
-
-
-const FriendsList = () => {
+const FriendsList = ({ friends, onFriendClick }) => {
   return (
-    <div>
-      <p>FriendsList Content</p>
-      <FriendItem/>
-    </div>
+    <ul className="list-disc pl-5">
+      {friends.map(friend => (
+        <li key={friend} onClick={() => onFriendClick(friend)} className="cursor-pointer">
+          {friend}
+        </li>
+      ))}
+    </ul>
   );
 };
 
 export default FriendsList;
+
