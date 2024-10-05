@@ -4,7 +4,7 @@ import Card from "../Card/Card";
 import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
 import Modal from "../Modal/Modal";
 
-const GoodDeedsList = ({ addedDeed }) => {
+const GoodDeedsList = ({ addedDeed, ownDashboard }) => {
   const [visible, setVisible] = useState(6);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(null);
@@ -59,11 +59,16 @@ const GoodDeedsList = ({ addedDeed }) => {
     closeModal();
   };
 
+  const deleteCard = (index) => {
+    const updatedCards = cards.filter((_, i) => i !== index);
+    setCards(updatedCards);
+  };
+
   return (
     <div className="p-4">
       <div className="flex flex-wrap gap-4 justify-center">
         {cards.slice(0, visible).map((content, index) => (
-          <Card key={index} content={content} onEdit={() => openModal(content, index)} />
+          <Card key={index} content={content} onEdit={ownDashboard ? () => openModal(content, index) : null} onDelete={ownDashboard ? () => deleteCard(index) : null} />
         ))}
       </div>
       {visible < cards.length && (
@@ -85,5 +90,6 @@ const GoodDeedsList = ({ addedDeed }) => {
 };
 
 export default GoodDeedsList;
+
 
 

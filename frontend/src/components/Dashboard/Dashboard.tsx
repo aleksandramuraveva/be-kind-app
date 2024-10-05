@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import GoodDeedsList from "../GoodDeedsList/GoodDeedsList";
 import Modal from "../Modal/Modal";
 
-const Dashboard = ({ friendName}) => {
+const Dashboard = ({ friendName = "Sara" }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newDeed, setNewDeed] = useState("");
   const [addedDeed, setAddedDeed] = useState(null);
@@ -44,7 +44,7 @@ const Dashboard = ({ friendName}) => {
           +
         </button>
       )}
-      <GoodDeedsList addedDeed={addedDeed} />
+      <GoodDeedsList addedDeed={addedDeed} ownDashboard={displayName === "Your"} />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <textarea
           value={newDeed}
@@ -62,6 +62,7 @@ const Dashboard = ({ friendName}) => {
 };
 
 export default Dashboard;
+
 
 
 
