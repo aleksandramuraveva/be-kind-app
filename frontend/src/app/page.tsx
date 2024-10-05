@@ -3,6 +3,7 @@
 // import { useEffect, useState } from 'react';
 import Dashboard from "../components/Dashboard/Dashboard";
 import HomeText from "../components/HomeText/HomeText";
+import Auth from "../components/Auth/Auth";
 
 export default function Home() {
   // const [message, setMessage] = useState("");
@@ -24,7 +25,8 @@ export default function Home() {
       <main className="flex flex-col gap-8 items-center sm:items-start max-w-screen-lg mx-auto">
        {/* <div>{message} hello</div>*/}
         <HomeText />
-        <Dashboard />
+        <Auth/>
+       {/* <Dashboard />*/}
       </main>
     </div>
 
