@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import GoodDeedsList from "../GoodDeedsList/GoodDeedsList";
 import Modal from "../Modal/Modal";
 
-const Dashboard = ({ friendName = "Sara" }) => {
+const Dashboard = ({ friendName }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newDeed, setNewDeed] = useState("");
   const [addedDeed, setAddedDeed] = useState(null);
@@ -39,7 +39,7 @@ const Dashboard = ({ friendName = "Sara" }) => {
       {displayName === "Your" && (
         <button
           onClick={openModal}
-          className="block mx-auto mb-4 bg-white text-my-blue rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:opacity-80 transition duration-300 hover:-translate-y-1"
+          className="block mx-auto mb-1 bg-white text-my-pink rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:opacity-80 transition duration-300 hover:-translate-y-1"
         >
           +
         </button>
