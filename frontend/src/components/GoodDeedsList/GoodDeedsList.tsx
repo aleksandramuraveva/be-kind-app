@@ -1,10 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from "../Card/Card";
 import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
 import Modal from "../Modal/Modal";
 
-const GoodDeedsList = () => {
+const GoodDeedsList = ({ addedDeed }) => {
   const [visible, setVisible] = useState(6);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(null);
@@ -25,6 +25,12 @@ const GoodDeedsList = () => {
   ];
 
   const [cards, setCards] = useState(initialCards);
+
+  useEffect(() => {
+    if (addedDeed) {
+      setCards(prevCards => [addedDeed, ...prevCards]);
+    }
+  }, [addedDeed]);
 
   const showMoreCards = () => {
     setVisible(prevVisible => prevVisible + 6);
@@ -79,6 +85,5 @@ const GoodDeedsList = () => {
 };
 
 export default GoodDeedsList;
-
 
 
