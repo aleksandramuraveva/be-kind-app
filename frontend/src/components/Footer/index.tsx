@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -10,7 +10,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           className="hover:opacity-80"
         >
-          AM 
+          AM
         </a>
         <span className="ml-1"> © 2024 All rights reserved</span>
       </div>

@@ -9,43 +9,78 @@ const SignUpForm: React.FC = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
       <Form className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-md font-medium text-white mb-1">Name</label>
-          <Field name="name" type="text" className="w-full px-3 py-2 border border-gray-300 rounded-md" />
-          <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
+          <label
+            htmlFor="name"
+            className="block text-md font-medium text-white mb-1"
+          >
+            Name
+          </label>
+          <Field
+            name="name"
+            type="text"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          />
+          <ErrorMessage
+            name="name"
+            component="div"
+            className="text-red-500 text-sm"
+          />
         </div>
         <div>
-          <label htmlFor="email" className="block text-md font-medium text-white mb-1">Email</label>
-          <Field name="email" type="email" className="w-full px-3 py-2 border border-gray-300 rounded-md" />
-          <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+          <label
+            htmlFor="email"
+            className="block text-md font-medium text-white mb-1"
+          >
+            Email
+          </label>
+          <Field
+            name="email"
+            type="email"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          />
+          <ErrorMessage
+            name="email"
+            component="div"
+            className="text-red-500 text-sm"
+          />
         </div>
         <div>
-          <label htmlFor="password" className="block text-md font-medium text-white mb-1">Password</label>
-          <Field name="password" type="password" className="w-full px-3 py-2 border border-gray-300 rounded-md" />
-          <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+          <label
+            htmlFor="password"
+            className="block text-md font-medium text-white mb-1"
+          >
+            Password
+          </label>
+          <Field
+            name="password"
+            type="password"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          />
+          <ErrorMessage
+            name="password"
+            component="div"
+            className="text-red-500 text-sm"
+          />
         </div>
-        <button type="submit" className="bg-my-pink w-full px-4 py-2 font-semibold text-white bg-pink-500 rounded-md">Sign Up</button>
+        <button
+          type="submit"
+          className="bg-my-pink w-full px-4 py-2 font-semibold text-white bg-pink-500 rounded-md"
+        >
+          Sign Up
+        </button>
       </Form>
     </Formik>
   );
 };
 
 export default SignUpForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { Formik, Field, Form, ErrorMessage } from 'formik';
 // import * as Yup from 'yup';

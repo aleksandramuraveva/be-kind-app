@@ -17,7 +17,9 @@ const FriendsPage = () => {
 
   const handleSearch = (searchTerm) => {
     if (searchTerm) {
-      const results = ['User1', 'User2', 'User3'].filter(user => user.includes(searchTerm));
+      const results = ['User1', 'User2', 'User3'].filter((user) =>
+        user.includes(searchTerm),
+      );
       setSearchResults(results);
     } else {
       setSearchResults([]);
@@ -26,7 +28,7 @@ const FriendsPage = () => {
 
   const handleAddFriend = (friend) => {
     setFriends([...friends, friend]);
-    setSearchResults(searchResults.filter(result => result !== friend));
+    setSearchResults(searchResults.filter((result) => result !== friend));
   };
 
   const handleDeleteFriend = (index) => {
@@ -41,13 +43,22 @@ const FriendsPage = () => {
       </div>
       <div className="mb-10 text-2xl flex justify-center">
         {searchResults.length > 0 ? (
-          <SearchResultsList results={searchResults} onAddFriend={handleAddFriend} />
+          <SearchResultsList
+            results={searchResults}
+            onAddFriend={handleAddFriend}
+          />
         ) : (
-          searchResults.length === 0 && <p className="text-white">No people found</p>
+          searchResults.length === 0 && (
+            <p className="text-white">No people found</p>
+          )
         )}
       </div>
       <div className="pb-20 text-2xl flex justify-center">
-        <FriendsList friends={friends} onFriendClick={handleFriendClick} onDeleteFriend={handleDeleteFriend} />
+        <FriendsList
+          friends={friends}
+          onFriendClick={handleFriendClick}
+          onDeleteFriend={handleDeleteFriend}
+        />
       </div>
       {selectedFriend && <Dashboard friendName={selectedFriend} />}
     </div>
@@ -55,5 +66,3 @@ const FriendsPage = () => {
 };
 
 export default FriendsPage;
-
-

@@ -6,10 +6,16 @@ const Card = ({ onEdit, onDelete, content }) => {
       </p>
       {onEdit && (
         <>
-          <button className="absolute top-3 right-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" onClick={onDelete}>
+          <button
+            className="absolute top-3 right-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            onClick={onDelete}
+          >
             &times;
           </button>
-          <button className="absolute top-2 right-10 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" onClick={onEdit}>
+          <button
+            className="absolute top-2 right-10 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            onClick={onEdit}
+          >
             &hellip;
           </button>
         </>
@@ -22,11 +28,6 @@ const Card = ({ onEdit, onDelete, content }) => {
 };
 
 export default Card;
-
-
-
-
-
 
 // const Card = ({ onEdit }) => {
 //   return (
@@ -46,5 +47,3 @@ export default Card;
 // };
 
 // export default Card;
-
-

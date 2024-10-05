@@ -1,9 +1,9 @@
 'use client';
 
 // import { useEffect, useState } from 'react';
-import Dashboard from "../components/Dashboard/Dashboard";
-import HomeText from "../components/HomeText/HomeText";
-import Auth from "../components/Auth/Auth";
+import Dashboard from '../components/Dashboard/Dashboard';
+import HomeText from '../components/HomeText/HomeText';
+import Auth from '../components/Auth/Auth';
 
 export default function Home() {
   // const [message, setMessage] = useState("");
@@ -20,16 +20,13 @@ export default function Home() {
   // }, []);
 
   return (
-  
-   <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-open-sans)]">
+    <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-open-sans)]">
       <main className="flex flex-col gap-8 items-center sm:items-start max-w-screen-lg mx-auto">
-       {/* <div>{message} hello</div>*/}
+        {/* <div>{message} hello</div>*/}
         <HomeText />
-        <Auth/>
-       {/* <Dashboard />*/}
+        <Auth />
+        {/* <Dashboard />*/}
       </main>
     </div>
-
   );
 }
-

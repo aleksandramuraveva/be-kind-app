@@ -1,39 +1,38 @@
-
 import React, { useState, useEffect } from 'react';
-import Card from "../Card/Card";
-import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
-import Modal from "../Modal/Modal";
+import Card from '../Card/Card';
+import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
+import Modal from '../Modal/Modal';
 
 const GoodDeedsList = ({ addedDeed, ownDashboard }) => {
   const [visible, setVisible] = useState(6);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(null);
-  const [currentCardContent, setCurrentCardContent] = useState("");
+  const [currentCardContent, setCurrentCardContent] = useState('');
 
   const initialCards = [
-    "Good deed 1", 
-    "Good deed 2", 
-    "Good deed 3", 
-    "Good deed 4", 
-    "Good deed 5", 
-    "Good deed 6", 
-    "Good deed 7",
-    "Good deed 4", 
-    "Good deed 5", 
-    "Good deed 6", 
-    "Good deed 7"
+    'Good deed 1',
+    'Good deed 2',
+    'Good deed 3',
+    'Good deed 4',
+    'Good deed 5',
+    'Good deed 6',
+    'Good deed 7',
+    'Good deed 4',
+    'Good deed 5',
+    'Good deed 6',
+    'Good deed 7',
   ];
 
   const [cards, setCards] = useState(initialCards);
 
   useEffect(() => {
     if (addedDeed) {
-      setCards(prevCards => [addedDeed, ...prevCards]);
+      setCards((prevCards) => [addedDeed, ...prevCards]);
     }
   }, [addedDeed]);
 
   const showMoreCards = () => {
-    setVisible(prevVisible => prevVisible + 6);
+    setVisible((prevVisible) => prevVisible + 6);
   };
 
   const openModal = (content, index) => {
@@ -44,7 +43,7 @@ const GoodDeedsList = ({ addedDeed, ownDashboard }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setCurrentCardContent("");
+    setCurrentCardContent('');
     setCurrentCardIndex(null);
   };
 
@@ -68,21 +67,29 @@ const GoodDeedsList = ({ addedDeed, ownDashboard }) => {
     <div className="p-4">
       <div className="flex flex-wrap gap-4 justify-center">
         {cards.slice(0, visible).map((content, index) => (
-          <Card key={index} content={content} onEdit={ownDashboard ? () => openModal(content, index) : null} onDelete={ownDashboard ? () => deleteCard(index) : null} />
+          <Card
+            key={index}
+            content={content}
+            onEdit={ownDashboard ? () => openModal(content, index) : null}
+            onDelete={ownDashboard ? () => deleteCard(index) : null}
+          />
         ))}
       </div>
-      {visible < cards.length && (
-        <ShowMoreButton onClick={showMoreCards} />
-      )}
+      {visible < cards.length && <ShowMoreButton onClick={showMoreCards} />}
       <Modal isOpen={isModalOpen} onClose={closeModal} onSave={saveChanges}>
-        <textarea 
-          value={currentCardContent} 
-          onChange={handleEditChange} 
-          className="mt-4 w-full p-2 border border-gray-300 rounded" 
+        <textarea
+          value={currentCardContent}
+          onChange={handleEditChange}
+          className="mt-4 w-full p-2 border border-gray-300 rounded"
           rows="4"
         />
         <div className="flex justify-end mt-4">
-          <button onClick={saveChanges} className="bg-my-blue text-white px-4 py-2 rounded">Edit</button>
+          <button
+            onClick={saveChanges}
+            className="bg-my-blue text-white px-4 py-2 rounded"
+          >
+            Edit
+          </button>
         </div>
       </Modal>
     </div>
@@ -90,6 +97,3 @@ const GoodDeedsList = ({ addedDeed, ownDashboard }) => {
 };
 
 export default GoodDeedsList;
-
-
-

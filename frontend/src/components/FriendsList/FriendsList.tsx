@@ -2,7 +2,10 @@ const FriendsList = ({ friends, onFriendClick, onDeleteFriend }) => {
   return (
     <ul className="pl-5">
       {friends.map((friend, index) => (
-        <li key={friend} className="text-shadow3 flex text-my-blue items-center cursor-pointer hover:text-white">
+        <li
+          key={friend}
+          className="text-shadow3 flex text-my-blue items-center cursor-pointer hover:text-white"
+        >
           <span className="text-red-500 mr-1">❤️</span>
           <span onClick={() => onFriendClick(friend)} className="mr-2">
             {friend}
@@ -20,6 +23,3 @@ const FriendsList = ({ friends, onFriendClick, onDeleteFriend }) => {
 };
 
 export default FriendsList;
-
-
-

@@ -1,5 +1,3 @@
-
-
 const ProfilePage = () => {
   return (
     <div>

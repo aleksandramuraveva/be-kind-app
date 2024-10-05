@@ -14,7 +14,8 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: 'Be Kind App',
-  description: 'A platform to manage and share your good deeds with friends. Join the community and spread kindness!',
+  description:
+    'A platform to manage and share your good deeds with friends. Join the community and spread kindness!',
 };
 
 export default function RootLayout({
@@ -24,7 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${openSans.variable} flex flex-col min-h-screen bg-cover bg-no-repeat bg-fixed`}>
+      <body
+        className={`${openSans.variable} flex flex-col min-h-screen bg-cover bg-no-repeat bg-fixed`}
+      >
         <div className="fixed inset-0 bg-pink-400 opacity-50"></div>
         <div className="relative z-10 flex flex-col min-h-screen">
           <Header />
@@ -35,4 +38,3 @@ export default function RootLayout({
     </html>
   );
 }
-

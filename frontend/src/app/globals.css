@@ -5,26 +5,30 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --brown: #3C2622;
-  --pink: #F389B2;
-  --blue:  #8D96ED;
+  --brown: #3c2622;
+  --pink: #f389b2;
+  --blue: #8d96ed;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-
   }
 }
 
 body {
   color: var(--brown);
   background: var(--background);
-  font-family: var(--font-open-sans),Arial, Helvetica, sans-serif;
-  background: rgb(239,163,238);
-  background: linear-gradient(90deg, rgba(239,163,238,1) 0%, rgba(243,186,237,1) 40%, rgba(235,192,242,0.9958916672137605) 100%);
-  background-image: url("../images/bg.jpg");
+  font-family: var(--font-open-sans), Arial, Helvetica, sans-serif;
+  background: rgb(239, 163, 238);
+  background: linear-gradient(
+    90deg,
+    rgba(239, 163, 238, 1) 0%,
+    rgba(243, 186, 237, 1) 40%,
+    rgba(235, 192, 242, 0.9958916672137605) 100%
+  );
+  background-image: url('../images/bg.jpg');
 }
 
 .text-shadow {
@@ -58,15 +62,14 @@ body {
 }
 
 .ribbon:before {
-  border-color: #8D96ED #8D96ED #8D96ED transparent;
+  border-color: #8d96ed #8d96ed #8d96ed transparent;
   left: -25px;
 }
 
 .ribbon:after {
-  border-color: #8D96ED transparent #8D96ED #8D96ED;
+  border-color: #8d96ed transparent #8d96ed #8d96ed;
   right: -25px;
 }
-
 
 @layer utilities {
   .text-balance {

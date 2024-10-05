@@ -13,8 +13,7 @@ const config: Config = {
         foreground: 'var(--foreground)',
         'my-brown': 'var(--brown)',
         'my-pink': 'var(--pink)',
-        'my-blue': 'var(--blue)'
-
+        'my-blue': 'var(--blue)',
       },
     },
   },

@@ -1,8 +1,11 @@
 const SearchResultsList = ({ results, onAddFriend }) => {
   return (
     <ul className="list-disc pl-5">
-      {results.map(result => (
-        <li key={result} className="flex justify-between items-center mt-2 text-white">
+      {results.map((result) => (
+        <li
+          key={result}
+          className="flex justify-between items-center mt-2 text-white"
+        >
           {result}
           <div className="relative group">
             <button
@@ -11,11 +14,9 @@ const SearchResultsList = ({ results, onAddFriend }) => {
             >
               +
             </button>
-         <span className="absolute top-1/2 left-full transform -translate-y-1/2 px-4 py-2 ml-2 bg-gray-100 text-my-blue text-xs rounded opacity-0 whitespace-nowrap group-hover:opacity-100 transition duration-200">
-  Add as a friend
-</span>
-
-
+            <span className="absolute top-1/2 left-full transform -translate-y-1/2 px-4 py-2 ml-2 bg-gray-100 text-my-blue text-xs rounded opacity-0 whitespace-nowrap group-hover:opacity-100 transition duration-200">
+              Add as a friend
+            </span>
           </div>
         </li>
       ))}
@@ -24,6 +25,3 @@ const SearchResultsList = ({ results, onAddFriend }) => {
 };
 
 export default SearchResultsList;
-
-
-

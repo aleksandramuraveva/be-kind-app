@@ -1,4 +1,3 @@
-
 const AddFriends = () => {
   return (
     <div>
