@@ -24,14 +24,17 @@ const goodDeeds: GoodDeed[] = [
     content: 'Cleaned the park',
     createdAt: new Date(),
     updatedAt: new Date(),
-  }
+  },
 ];
 
 @Injectable()
 export class GoodDeedsService {
   constructor(private usersService: UsersService) {}
 
-  async create(goodDeed: { userId: number; content: string }): Promise<GoodDeed> {
+  async create(goodDeed: {
+    userId: number;
+    content: string;
+  }): Promise<GoodDeed> {
     const user = await this.usersService.findUserById(goodDeed.userId);
     if (!user) {
       throw new Error('User not found');
@@ -49,13 +52,13 @@ export class GoodDeedsService {
 
   findAllByUser(userId: number): GoodDeed[] {
     const numericUserId = Number(userId);
-    const userDeeds = goodDeeds.filter(deed => deed.userId === numericUserId);
+    const userDeeds = goodDeeds.filter((deed) => deed.userId === numericUserId);
     return userDeeds;
   }
 
   update(id: number, content: string): GoodDeed | undefined {
     const numericId = Number(id);
-    const goodDeed = goodDeeds.find(deed => deed.id === numericId);
+    const goodDeed = goodDeeds.find((deed) => deed.id === numericId);
     if (goodDeed) {
       goodDeed.content = content;
       goodDeed.updatedAt = new Date();
@@ -67,7 +70,7 @@ export class GoodDeedsService {
 
   delete(id: number): GoodDeed | undefined {
     const numericId = Number(id);
-    const index = goodDeeds.findIndex(deed => deed.id === numericId);
+    const index = goodDeeds.findIndex((deed) => deed.id === numericId);
     if (index !== -1) {
       const deletedDeed = goodDeeds.splice(index, 1)[0];
       return deletedDeed;
