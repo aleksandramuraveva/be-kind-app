@@ -27,7 +27,72 @@ const users: User[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+  {
+    userId: 3,
+    username: 'Alex',
+    email: 'alex@example.com',
+    password: 'passwordtest3@',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    userId: 4,
+    username: 'Sophia',
+    email: 'sophia@example.com',
+    password: 'passwordtest4@',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    userId: 5,
+    username: 'Mike',
+    email: 'mike@example.com',
+    password: 'passwordtest5@',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    userId: 6,
+    username: 'Emma',
+    email: 'emma@example.com',
+    password: 'passwordtest6@',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    userId: 7,
+    username: 'Liam',
+    email: 'liam@example.com',
+    password: 'passwordtest7@',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    userId: 8,
+    username: 'Olivia',
+    email: 'olivia@example.com',
+    password: 'passwordtest8@',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    userId: 9,
+    username: 'Noah',
+    email: 'noah@example.com',
+    password: 'passwordtest9@',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    userId: 10,
+    username: 'Ava',
+    email: 'ava@example.com',
+    password: 'passwordtest10@',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ];
+
 
 @Injectable()
 export class UsersService {
@@ -35,7 +100,11 @@ export class UsersService {
     return users.find((user) => user.email === email);
   }
 
-  async createUser(input: { name: string; email: string; password: string }): Promise<User> {
+  async createUser(input: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<User> {
     const newUser: User = {
       userId: users.length + 1,
       username: input.name,
@@ -46,5 +115,47 @@ export class UsersService {
     };
     users.push(newUser);
     return newUser;
+  }
+
+  async updateUserName(userId: string, newName: string): Promise<User> {
+    const user = users.find((user) => user.userId === parseInt(userId));
+    if (!user) {
+      throw new Error('User not found');
+    }
+    user.username = newName;
+    user.updatedAt = new Date();
+    console.log('Updated user:', user);
+    return user;
+  }
+
+  async updateUserEmail(userId: string, newEmail: string): Promise<User> {
+    const user = users.find((user) => user.userId === parseInt(userId));
+    if (!user) {
+      throw new Error('User not found');
+    }
+    user.email = newEmail;
+    user.updatedAt = new Date();
+    console.log('Updated user email:', user);
+    return user;
+  }
+
+  async updateUserPassword(userId: string, newPassword: string): Promise<User> {
+    const user = users.find((user) => user.userId === parseInt(userId));
+    if (!user) {
+      throw new Error('User not found');
+    }
+    user.password = newPassword;
+    user.updatedAt = new Date();
+    console.log('Updated user password:', user);
+    return user;
+  }
+
+  async deleteUser(userId: string): Promise<void> {
+    const index = users.findIndex((user) => user.userId === parseInt(userId));
+    if (index === -1) {
+      throw new Error('User not found');
+    }
+    users.splice(index, 1);
+    console.log('Deleted user with ID:', userId);
   }
 }
