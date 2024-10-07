@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { GoodDeedsModule } from './good-deeds/good-deeds.module';
+import { FriendsModule } from './friends/friends.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -24,6 +25,7 @@ dotenv.config();
     UsersModule,
     AuthModule,
     GoodDeedsModule,
+    FriendsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
