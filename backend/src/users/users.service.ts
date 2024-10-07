@@ -1,3 +1,5 @@
+
+
 import { Injectable } from '@nestjs/common';
 
 export type User = {
@@ -31,7 +33,8 @@ const users: User[] = [
 
 @Injectable()
 export class UsersService {
-  async findUserByName(username: string): Promise<User | undefined> {
-    return users.find((user) => user.username === username);
+  async findUserByEmail(email: string): Promise<User | undefined> {
+    return users.find((user) => user.email === email);
   }
 }
+
