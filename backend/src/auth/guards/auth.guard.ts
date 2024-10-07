@@ -25,8 +25,9 @@ export class AuthGuard implements CanActivate {
         userId: tokenPayload.sub,
         username: tokenPayload.username,
       };
+      console.log('Authorized User:', request.user);
       return true;
-    } catch (error) {
+    } catch {
       throw new UnauthorizedException();
     }
   }

@@ -93,18 +93,17 @@ const users: User[] = [
   },
 ];
 
-
 @Injectable()
 export class UsersService {
-  async findUserByEmail(email: string): Promise<User | undefined> {
-    return users.find((user) => user.email === email);
+  async findUserById(userId: number): Promise<User | undefined> {
+    return users.find(user => user.userId === userId);
   }
 
-  async createUser(input: {
-    name: string;
-    email: string;
-    password: string;
-  }): Promise<User> {
+  async findUserByEmail(email: string): Promise<User | undefined> {
+    return users.find(user => user.email === email);
+  }
+
+  async createUser(input: { name: string; email: string; password: string }): Promise<User> {
     const newUser: User = {
       userId: users.length + 1,
       username: input.name,
@@ -117,8 +116,8 @@ export class UsersService {
     return newUser;
   }
 
-  async updateUserName(userId: string, newName: string): Promise<User> {
-    const user = users.find((user) => user.userId === parseInt(userId));
+  async updateUserName(userId: number, newName: string): Promise<User> {
+    const user = users.find(user => user.userId === userId);
     if (!user) {
       throw new Error('User not found');
     }
@@ -128,8 +127,8 @@ export class UsersService {
     return user;
   }
 
-  async updateUserEmail(userId: string, newEmail: string): Promise<User> {
-    const user = users.find((user) => user.userId === parseInt(userId));
+  async updateUserEmail(userId: number, newEmail: string): Promise<User> {
+    const user = users.find(user => user.userId === userId);
     if (!user) {
       throw new Error('User not found');
     }
@@ -139,8 +138,8 @@ export class UsersService {
     return user;
   }
 
-  async updateUserPassword(userId: string, newPassword: string): Promise<User> {
-    const user = users.find((user) => user.userId === parseInt(userId));
+  async updateUserPassword(userId: number, newPassword: string): Promise<User> {
+    const user = users.find(user => user.userId === userId);
     if (!user) {
       throw new Error('User not found');
     }
@@ -150,8 +149,8 @@ export class UsersService {
     return user;
   }
 
-  async deleteUser(userId: string): Promise<void> {
-    const index = users.findIndex((user) => user.userId === parseInt(userId));
+  async deleteUser(userId: number): Promise<void> {
+    const index = users.findIndex(user => user.userId === userId);
     if (index === -1) {
       throw new Error('User not found');
     }
