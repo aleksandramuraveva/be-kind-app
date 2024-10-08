@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { v4 as uuidv4 } from 'uuid';
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class UsersService {
@@ -57,7 +59,8 @@ export class UsersService {
     if (!user) {
       throw new Error('User not found');
     }
-    user.password = newPassword;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
     user.updatedAt = new Date();
     return this.usersRepository.save(user);
   }
