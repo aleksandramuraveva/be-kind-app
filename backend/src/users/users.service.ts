@@ -1,49 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-
-export type User = {
-  userId: number;
-  username: string;
-  email: string;
-  password: string;
-  uniqueTag: string;
-  friends: User[];
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// Mock data
-const users: User[] = [
-  {
-    userId: 1,
-    username: 'Maria',
-    email: 'maria@example.com',
-    password: 'passwordtest1@',
-    uniqueTag: 'Maria123abc',
-    friends: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    userId: 2,
-    username: 'John',
-    email: 'john@example.com',
-    password: 'passwordtest2@',
-    uniqueTag: 'John456def',
-    friends: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+import { GoodDeed } from '../good-deeds/entities/good-deed.entity';
+import { User } from './entities/user.entity'; // Import User entity
+import { users, goodDeeds, populateGoodDeeds } from '../mock-data/mock-data';
 
 @Injectable()
 export class UsersService {
   async findUserById(userId: number): Promise<User | undefined> {
-    return users.find((user) => user.userId === userId);
+    const user = users.find((user) => user.userId === userId);
+    if (user) {
+      populateGoodDeeds(user, goodDeeds);
+    }
+    return user;
   }
 
   async findUserByEmail(email: string): Promise<User | undefined> {
-    return users.find((user) => user.email === email);
+    const user = users.find((user) => user.email === email);
+    if (user) {
+      populateGoodDeeds(user, goodDeeds);
+    }
+    return user;
   }
 
   async createUser(input: {
@@ -59,10 +35,12 @@ export class UsersService {
       password: input.password,
       uniqueTag: uniqueTag,
       friends: [],
+      goodDeeds: [], // Initialize goodDeeds array
       createdAt: new Date(),
       updatedAt: new Date(),
     };
     users.push(newUser);
+    populateGoodDeeds(newUser, goodDeeds); // Populate good deeds for the new user
     return newUser;
   }
 
@@ -74,6 +52,7 @@ export class UsersService {
     user.username = newName;
     user.updatedAt = new Date();
     console.log('Updated user:', user);
+    populateGoodDeeds(user, goodDeeds);
     return user;
   }
 
@@ -85,6 +64,7 @@ export class UsersService {
     user.email = newEmail;
     user.updatedAt = new Date();
     console.log('Updated user email:', user);
+    populateGoodDeeds(user, goodDeeds);
     return user;
   }
 
@@ -96,6 +76,7 @@ export class UsersService {
     user.password = newPassword;
     user.updatedAt = new Date();
     console.log('Updated user password:', user);
+    populateGoodDeeds(user, goodDeeds);
     return user;
   }
 
@@ -109,6 +90,10 @@ export class UsersService {
   }
 
   async findUserByUniqueTag(uniqueTag: string): Promise<User | undefined> {
-    return users.find((user) => user.uniqueTag === uniqueTag);
+    const user = users.find((user) => user.uniqueTag === uniqueTag);
+    if (user) {
+      populateGoodDeeds(user, goodDeeds);
+    }
+    return user;
   }
 }
