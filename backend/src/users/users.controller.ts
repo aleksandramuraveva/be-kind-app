@@ -30,7 +30,10 @@ export class UsersController {
 
   @HttpCode(HttpStatus.OK)
   @Put(':id/password')
-  async updatePassword(@Param('id') id: string, @Body() input: { password: string }) {
+  async updatePassword(
+    @Param('id') id: string,
+    @Body() input: { password: string },
+  ) {
     return this.usersService.updateUserPassword(Number(id), input.password);
   }
 
