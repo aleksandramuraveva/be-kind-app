@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
 import { GoodDeed } from '../good-deeds/entities/good-deed.entity';
@@ -19,13 +19,13 @@ export class FriendsService {
     friend.friends = friend.friends || [];
 
     user.friends.push(friend);
-    friend.friends.push(user); // Ensure bidirectional friendship
+    friend.friends.push(user); 
 
     await this.usersService.saveUser(user);
     await this.usersService.saveUser(friend);
   }
 
-  async getFriendsWithDeeds(userId: number): Promise<
+  async getFriendsWithDeeds(authUserId: number, userId: number): Promise<
     {
       userId: number;
       username: string;
@@ -33,6 +33,10 @@ export class FriendsService {
       goodDeeds: GoodDeed[];
     }[]
   > {
+    if (authUserId !== userId) {
+      throw new ForbiddenException('You can only view your own friends.');
+    }
+
     const user = await this.usersService.findUserById(userId);
     if (!user) {
       throw new Error('User not found');
@@ -48,4 +52,5 @@ export class FriendsService {
     }));
   }
 }
+
 
