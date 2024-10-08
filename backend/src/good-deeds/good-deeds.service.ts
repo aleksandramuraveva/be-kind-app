@@ -1,79 +1,52 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { GoodDeed } from './entities/good-deed.entity';
 import { UsersService } from '../users/users.service';
 
-// Mock data
-const goodDeeds: GoodDeed[] = [
-  {
-    id: 1,
-    userId: 1,
-    content: 'Helped an old lady cross the street',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    userId: 1,
-    content: 'Donated clothes to charity',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 3,
-    userId: 2,
-    content: 'Cleaned the park',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
-
 @Injectable()
 export class GoodDeedsService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    @InjectRepository(GoodDeed)
+    private goodDeedsRepository: Repository<GoodDeed>,
+    private usersService: UsersService
+  ) {}
 
-  async create(goodDeed: {
-    userId: number;
-    content: string;
-  }): Promise<GoodDeed> {
+  async create(goodDeed: { userId: number; content: string }): Promise<GoodDeed> {
     const user = await this.usersService.findUserById(goodDeed.userId);
     if (!user) {
       throw new Error('User not found');
     }
 
-    const newDeed: GoodDeed = {
-      id: goodDeeds.length + 1,
+    const newDeed = this.goodDeedsRepository.create({
       ...goodDeed,
       createdAt: new Date(),
       updatedAt: new Date(),
-    };
-    goodDeeds.push(newDeed);
-    return newDeed;
+      user: user
+    });
+
+    return this.goodDeedsRepository.save(newDeed);
   }
 
-  findAllByUser(userId: number): GoodDeed[] {
-    const numericUserId = Number(userId);
-    const userDeeds = goodDeeds.filter((deed) => deed.userId === numericUserId);
-    return userDeeds;
+  async findAllByUser(userId: number): Promise<GoodDeed[]> {
+    return this.goodDeedsRepository.find({ where: { userId }, relations: ['user'] });
   }
 
-  update(id: number, content: string): GoodDeed | undefined {
-    const numericId = Number(id);
-    const goodDeed = goodDeeds.find((deed) => deed.id === numericId);
+  async update(id: number, content: string): Promise<GoodDeed | undefined> {
+    const goodDeed = await this.goodDeedsRepository.findOne({ where: { id }, relations: ['user'] });
     if (goodDeed) {
       goodDeed.content = content;
       goodDeed.updatedAt = new Date();
-      console.log('Updated Good Deed:', goodDeed);
-      return goodDeed;
+      return this.goodDeedsRepository.save(goodDeed);
     }
     return undefined;
   }
 
-  delete(id: number): GoodDeed | undefined {
-    const numericId = Number(id);
-    const index = goodDeeds.findIndex((deed) => deed.id === numericId);
-    if (index !== -1) {
-      const deletedDeed = goodDeeds.splice(index, 1)[0];
-      return deletedDeed;
+  async delete(id: number): Promise<GoodDeed | undefined> {
+    const goodDeed = await this.goodDeedsRepository.findOne({ where: { id } });
+    if (goodDeed) {
+      await this.goodDeedsRepository.delete(id);
+      return goodDeed;
     }
     return undefined;
   }
