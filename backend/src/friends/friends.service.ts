@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { User } from '../users/entities/user.entity'; // Correct import
-import { GoodDeed } from '../good-deeds/entities/good-deed.entity'; // Correct import
+import { User } from '../users/entities/user.entity';
+import { GoodDeed } from '../good-deeds/entities/good-deed.entity';
 
 @Injectable()
 export class FriendsService {
@@ -20,6 +20,9 @@ export class FriendsService {
 
     user.friends.push(friend);
     friend.friends.push(user); // Ensure bidirectional friendship
+
+    await this.usersService.saveUser(user);
+    await this.usersService.saveUser(friend);
   }
 
   async getFriendsWithDeeds(userId: number): Promise<
@@ -45,3 +48,4 @@ export class FriendsService {
     }));
   }
 }
+

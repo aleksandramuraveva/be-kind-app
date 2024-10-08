@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 type AuthInput = { email: string; password: string };
 type RegisterInput = { name: string; email: string; password: string };
@@ -20,7 +21,12 @@ export class AuthService {
   ) {}
 
   async register(input: RegisterInput): Promise<AuthResult> {
-    const user = await this.usersService.createUser(input);
+    const hashedPassword = await bcrypt.hash(input.password, 10);
+    const user = await this.usersService.createUser({
+      name: input.name,
+      email: input.email,
+      password: hashedPassword,
+    });
     return this.signIn({
       userId: user.userId,
       username: user.username,
@@ -40,7 +46,7 @@ export class AuthService {
     input: AuthInput,
   ): Promise<(SignInData & { uniqueTag: string }) | null> {
     const user = await this.usersService.findUserByEmail(input.email);
-    if (user && user.password === input.password) {
+    if (user && await bcrypt.compare(input.password, user.password)) {
       return {
         userId: user.userId,
         username: user.username,
