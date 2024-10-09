@@ -1,7 +1,11 @@
+import ProfileSettings from '../../components/ProfileSettings/ProfileSettings';
+
+
+
 const ProfilePage = () => {
   return (
-    <div>
-      <p>ProfilePage Content</p>
+    <div className="flex flex-col gap-8 items-center sm:items-start max-w-screen-lg mx-auto">
+      <ProfileSettings/>
     </div>
   );
 };
