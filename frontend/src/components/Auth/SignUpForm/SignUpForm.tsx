@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useRouter } from 'next/navigation'; // Change to next/navigation
+import { useRouter } from 'next/navigation';
 import { signUpValidationSchema } from '../../../utils/validationSchema';
 
 const SignUpForm: React.FC = () => {
@@ -24,7 +24,7 @@ const SignUpForm: React.FC = () => {
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('username', data.username);
         localStorage.setItem('uniqueId', data.uniqueTag);
-        router.push('/'); // Correctly redirect
+        router.push('/'); 
       } else {
         const errorData = await response.json();
         if (errorData.statusCode === 409) {

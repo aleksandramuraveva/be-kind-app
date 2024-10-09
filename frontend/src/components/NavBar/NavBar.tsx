@@ -1,6 +1,26 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const NavBar = () => {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token); // Double negation ensures boolean value
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('uniqueId');
+    setIsAuthenticated(false);
+    router.push('/auth'); // Redirect to forms
+  };
+
   return (
     <nav className="p-4">
       <ul className="tracking-widest font-light uppercase text-xl flex justify-center items-center space-x-16 relative">
@@ -31,11 +51,16 @@ const NavBar = () => {
           <span className="rounded absolute left-0 top-0 w-full h-full bg-blue-500 transform group-hover:bg-blue-600 transition duration-300"></span>
         </li>
 
-        <li className="absolute right-0">
-          <button className="border shadow-md text-white px-4 py-2 rounded hover:opacity-80 transition duration-300 hover:-translate-y-1">
-            Logout
-          </button>
-        </li>
+        {isAuthenticated && (
+          <li className="absolute right-0">
+            <button 
+              onClick={handleLogout} 
+              className="border shadow-md text-white px-4 py-2 rounded hover:opacity-80 transition duration-300 hover:-translate-y-1"
+            >
+              Logout
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );
