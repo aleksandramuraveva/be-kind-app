@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useRouter } from 'next/navigation'; // Change to next/navigation
 import { signUpValidationSchema } from '../../../utils/validationSchema';
 
 const SignUpForm: React.FC = () => {
+  const router = useRouter();
   const [formError, setFormError] = useState('');
   const initialValues = { name: '', email: '', password: '' };
 
   const onSubmit = async (values: typeof initialValues) => {
     setFormError('');
-    console.log('Sign Up', values);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: 'POST',
@@ -20,13 +21,12 @@ const SignUpForm: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Registration successful:', data);
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('username', data.username);
         localStorage.setItem('uniqueId', data.uniqueTag);
+        router.push('/'); // Correctly redirect
       } else {
         const errorData = await response.json();
-        console.error('Registration error:', errorData);
         if (errorData.statusCode === 409) {
           setFormError('This email is already in use.');
         } else {
@@ -34,7 +34,6 @@ const SignUpForm: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error('Network error:', error);
       setFormError('Network error. Please try again.');
     }
   };
@@ -117,4 +116,3 @@ const SignUpForm: React.FC = () => {
 };
 
 export default SignUpForm;
-

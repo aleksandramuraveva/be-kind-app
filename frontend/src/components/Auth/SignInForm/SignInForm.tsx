@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useRouter } from 'next/navigation';
 import { signInValidationSchema } from '../../../utils/validationSchema';
 
 const SignInForm: React.FC = () => {
+  const router = useRouter();
   const [formError, setFormError] = useState('');
   const initialValues = { email: '', password: '' };
 
   const onSubmit = async (values: typeof initialValues) => {
     setFormError('');
-    console.log('Form submitted', values);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: 'POST',
@@ -20,14 +21,12 @@ const SignInForm: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Login successful:', data);
-
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('username', data.username);
         localStorage.setItem('uniqueId', data.uniqueTag);
+        router.push('/');
       } else {
         const errorData = await response.json();
-        console.error('Login error:', errorData);
         if (errorData.statusCode === 401) {
           setFormError('Invalid email or password.');
         } else {
@@ -35,7 +34,6 @@ const SignInForm: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error('Network error:', error);
       setFormError('Network error. Please try again.');
     }
   };
@@ -100,3 +98,4 @@ const SignInForm: React.FC = () => {
 };
 
 export default SignInForm;
+
