@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-const validationSchema = Yup.object({
+export const signUpValidationSchema = Yup.object({
   name: Yup.string()
     .matches(
       /^[a-zA-Z0-9_.]+$/,
@@ -23,4 +23,18 @@ const validationSchema = Yup.object({
     .required('Required'),
 });
 
-export default validationSchema;
+export const signInValidationSchema = Yup.object({
+  email: Yup.string()
+    .email('Invalid email address')
+    .matches(/.*@.*\..*/, 'Invalid email address')
+    .required('Required'),
+  password: Yup.string()
+    .min(8, 'Password must be at least 8 characters')
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      'Password must contain at least one special character',
+    )
+    .matches(/\d/, 'Password must contain at least one number')
+    .required('Required'),
+});
+
