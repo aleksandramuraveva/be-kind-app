@@ -27,6 +27,7 @@ const SignInForm: React.FC = () => {
         const data = await response.json();
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('username', data.username);
+        localStorage.setItem('userId', data.userId);
         localStorage.setItem('uniqueId', data.uniqueTag);
         dispatch(login()); 
         router.push('/');
