@@ -1,24 +1,30 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, login } from '../../store/authSlice';
+import { AppDispatch, RootState } from '../../store/store';
 import Link from 'next/link';
 
 const NavBar = () => {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const dispatch: AppDispatch = useDispatch(); 
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token); // Double negation ensures boolean value
-  }, []);
+    if (token) {
+      dispatch(login());
+    }
+  }, [dispatch]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('uniqueId');
-    setIsAuthenticated(false);
-    router.push('/auth'); // Redirect to forms
+    dispatch(logout());
+    router.push('/auth');
   };
 
   return (

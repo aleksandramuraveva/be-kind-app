@@ -1,20 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Dashboard from '../components/Dashboard/Dashboard';
 import HomeText from '../components/HomeText/HomeText';
 import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../store/authSlice';
+import { AppDispatch, RootState } from '../store/store';
 
 export default function Home() {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setIsAuthenticated(true);
+      dispatch(login());
     }
-  }, []);
+  }, [dispatch]);
 
   const handleStartClick = () => {
     router.push('/auth');
@@ -28,7 +32,7 @@ export default function Home() {
           <Dashboard />
         ) : (
           <button 
-            className="tracking-widest font-semibold uppercase text-xl  mx-auto border shadow-md text-white px-8 py-3 rounded hover:opacity-80 transition duration-300 hover:-translate-y-1"
+            className="tracking-widest font-semibold uppercase text-xl mx-auto border shadow-md text-white px-8 py-3 rounded hover:opacity-80 transition duration-300 hover:-translate-y-1"
             onClick={handleStartClick}
           >
             Start

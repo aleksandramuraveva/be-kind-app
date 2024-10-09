@@ -4,6 +4,7 @@ import { Open_Sans } from 'next/font/google';
 import Header from '../components/Header/index';
 import Footer from '../components/Footer/index';
 import './globals.css';
+import ClientProvider from '../components/ClientProvider/ClientProvider';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -30,9 +31,11 @@ export default function RootLayout({
       >
         <div className="fixed inset-0 bg-pink-400 opacity-50"></div>
         <div className="relative z-10 flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
+          <ClientProvider> {/* Use ClientProvider */}
+            <Header />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </ClientProvider>
         </div>
       </body>
     </html>
