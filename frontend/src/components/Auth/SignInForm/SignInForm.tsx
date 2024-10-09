@@ -2,9 +2,13 @@ import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import { signInValidationSchema } from '../../../utils/validationSchema';
+import { useDispatch } from 'react-redux'; 
+import { login } from '../../../store/authSlice';
+import { AppDispatch } from '../../../store/store'; 
 
 const SignInForm: React.FC = () => {
   const router = useRouter();
+  const dispatch: AppDispatch = useDispatch(); 
   const [formError, setFormError] = useState('');
   const initialValues = { email: '', password: '' };
 
@@ -24,6 +28,7 @@ const SignInForm: React.FC = () => {
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('username', data.username);
         localStorage.setItem('uniqueId', data.uniqueTag);
+        dispatch(login()); 
         router.push('/');
       } else {
         const errorData = await response.json();
@@ -98,4 +103,3 @@ const SignInForm: React.FC = () => {
 };
 
 export default SignInForm;
-
