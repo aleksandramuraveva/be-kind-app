@@ -9,12 +9,18 @@ export class FriendsController {
   constructor(private friendsService: FriendsService) {}
 
   @Post('add')
-  async addFriend(@Body() body: { userId: number; friendUniqueTag: string }, @Req() req: RequestWithUser) {
-    console.log('Add Friend - Request User ID:', req.user.userId, 'Body User ID:', body.userId);  
-    return this.friendsService.addFriend(
-      Number(body.userId),
+  async addFriend(@Body() body: { friendUniqueTag: string }, @Req() req: RequestWithUser) {
+    const userId = req.user.userId;
+    console.log('Add Friend - Request User ID:', userId);
+    const friend = await this.friendsService.addFriend(
+      userId,
       body.friendUniqueTag,
     );
+    return {
+      userId: friend.userId,
+      username: friend.username,
+      uniqueTag: friend.uniqueTag,
+    }; 
   }
 
   @Get(':userId')
