@@ -25,6 +25,40 @@ docker-compose up --build
 ```
 This will start the backend, frontend, and the PostgreSQL database.
 
+## Database
+Execute the SQL scripts to create tables and seed initial data:
+```
+CREATE TABLE public.good_deed (
+	id serial4 NOT NULL,
+	"userId" int4 NOT NULL,
+	"createdAt" timestamp DEFAULT now() NOT NULL,
+	"updatedAt" timestamp DEFAULT now() NOT NULL,
+	"content" varchar NOT NULL,
+	"userUserId" int4 NULL,
+	CONSTRAINT good_deed_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public."user" (
+	"userId" serial4 NOT NULL,
+	email varchar NOT NULL,
+	"password" varchar NOT NULL,
+	"uniqueTag" varchar NOT NULL,
+	"createdAt" timestamp DEFAULT now() NOT NULL,
+	"updatedAt" timestamp DEFAULT now() NOT NULL,
+	username varchar NOT NULL,
+	CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE (email),
+	CONSTRAINT user_pkey PRIMARY KEY ("userId")
+);
+
+CREATE TABLE public.user_friends_user (
+	"userUserId_1" int4 NOT NULL,
+	"userUserId_2" int4 NOT NULL,
+	CONSTRAINT "PK_ee6fb14a87dd3a8957a255c09fb" PRIMARY KEY ("userUserId_1", "userUserId_2")
+);
+CREATE INDEX "IDX_4b2937856e8abb83d19e7e8e8a" ON public.user_friends_user USING btree ("userUserId_2");
+CREATE INDEX "IDX_7fb20798b9339ba724e2939de1" ON public.user_friends_user USING btree ("userUserId_1");
+```
+
 ## Access the Application
 
 Frontend: http://localhost:3000
