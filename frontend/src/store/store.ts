@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
+import goodDeedsReducer from './goodDeedsSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+     goodDeeds: goodDeedsReducer,
   },
 });
 
