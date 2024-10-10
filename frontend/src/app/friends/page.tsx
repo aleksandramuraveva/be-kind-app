@@ -13,7 +13,7 @@ const FriendsPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const { friends, searchResults, friendDeeds } = useSelector((state: RootState) => state.friends);
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
-  const userId = localStorage.getItem('userId');
+  const userId = (typeof window !== 'undefined') ? localStorage.getItem('userId') : null; // Check if window is defined
 
   useEffect(() => {
     if (userId) {
@@ -32,15 +32,19 @@ const FriendsPage = () => {
   };
 
   const handleAddFriend = (friendUniqueTag: string) => {
-    dispatch(addFriend(friendUniqueTag));
+    dispatch(addFriend(friendUniqueTag)).then(() => {
+      if (userId) {
+        dispatch(fetchFriends(Number(userId))); // Fetch updated friends list
+      }
+    });
   };
 
   const handleDeleteFriend = (index: number) => {
-    //!!!
+    // Implement delete friend functionality
   };
 
   return (
-    <div className="p-4 max-w-screen-lg mx-auto">
+    <div className="p-4">
       <div className="mb-4">
         <SearchInput onSearch={handleSearch} />
       </div>
@@ -63,10 +67,11 @@ const FriendsPage = () => {
           onDeleteFriend={handleDeleteFriend}
         />
       </div>
-      {selectedFriend && <Dashboard friendId={selectedFriend.userId} friendName={selectedFriend.username} />}
+      {selectedFriend && <Dashboard friendId={selectedFriend.userId} friendName={selectedFriend.username} />} {/* Pass friendId and friendName to Dashboard */}
     </div>
   );
 };
 
 export default FriendsPage;
+
 

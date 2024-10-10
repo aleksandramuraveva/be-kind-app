@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { searchFriends } from '../../store/friendsSlice';
 
-const SearchInput = ({ onSearch }) => {
+const SearchInput = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const dispatch: AppDispatch = useDispatch();
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    onSearch(e.target.value);
+    dispatch(searchFriends(e.target.value));
   };
 
   const handleSearchClick = () => {
-    onSearch(searchTerm);
+    dispatch(searchFriends(searchTerm));
+    setSearchTerm('');
   };
 
   return (
