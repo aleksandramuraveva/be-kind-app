@@ -5,6 +5,7 @@ import { fetchGoodDeeds, updateDeed, deleteDeed } from '../../store/goodDeedsSli
 import Card from '../Card/Card';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 import Modal from '../Modal/Modal';
+import { format } from 'date-fns';
 
 const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goodDeeds: GoodDeed[] }) => {
   const dispatch: AppDispatch = useDispatch();
@@ -76,6 +77,7 @@ const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goo
           <Card
             key={deed.id}
             content={deed.content}
+            date={format(new Date(deed.createdAt), 'yyyy-MM-dd HH:mm:ss')}
             onEdit={ownDashboard ? () => openModal(deed.content, index) : null}
             onDelete={ownDashboard ? () => deleteCard(index) : null}
           />

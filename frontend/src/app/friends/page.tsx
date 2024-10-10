@@ -49,7 +49,7 @@ const FriendsPage = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-screen-lg mx-auto">
       <div className="mb-4">
         <SearchInput onSearch={handleSearch} />
       </div>
