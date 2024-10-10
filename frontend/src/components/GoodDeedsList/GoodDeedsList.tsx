@@ -77,10 +77,10 @@ const GoodDeedsList = ({ ownDashboard }) => {
     }
   };
 
-    return (
+  return (
     <div className="p-4">
       <div className="flex flex-wrap gap-4 justify-center items-stretch">
-        {goodDeeds.slice(0, visible).map((deed, index) => (
+        {Array.isArray(goodDeeds) && goodDeeds.slice(0, visible).map((deed, index) => ( // Add type check
           <Card
             key={deed.id}
             content={deed.content}
