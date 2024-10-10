@@ -5,6 +5,7 @@ import { fetchGoodDeeds, updateDeed, deleteDeed } from '../../store/goodDeedsSli
 import Card from '../Card/Card';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 import Modal from '../Modal/Modal';
+import { format } from 'date-fns';
 
 const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goodDeeds: GoodDeed[] }) => {
   const dispatch: AppDispatch = useDispatch();
@@ -14,7 +15,7 @@ const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goo
   const [currentCardContent, setCurrentCardContent] = useState('');
 
   const showMoreCards = () => {
-    setVisible((prevVisible) => prevVisible + 6);
+    setVisible(prevVisible => prevVisible + 6);
   };
 
   const openModal = (content: string, index: number) => {
@@ -76,10 +77,12 @@ const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goo
           <Card
             key={deed.id}
             content={deed.content}
+            date={deed.createdAt ? format(new Date(deed.createdAt), 'yyyy-MM-dd HH:mm:ss') : deed.updatedAt}
             onEdit={ownDashboard ? () => openModal(deed.content, index) : null}
             onDelete={ownDashboard ? () => deleteCard(index) : null}
           />
         ))}
+      
       </div>
       {visible < goodDeeds.length && <ShowMoreButton onClick={showMoreCards} />}
       <Modal isOpen={isModalOpen} onClose={closeModal}>

@@ -6,10 +6,20 @@ import { fetchFriendDeeds } from '../../store/friendsSlice';
 import GoodDeedsList from '../GoodDeedsList/GoodDeedsList';
 import Modal from '../Modal/Modal';
 
-const Dashboard = ({ friendId, friendName }: { friendId?: number, friendName?: string }) => {
+const Dashboard = ({
+  friendId,
+  friendName,
+}: {
+  friendId?: number;
+  friendName?: string;
+}) => {
   const dispatch: AppDispatch = useDispatch();
-  const userGoodDeeds = useSelector((state: RootState) => state.goodDeeds.deeds);
-  const friendGoodDeeds = useSelector((state: RootState) => state.friends.friendDeeds);
+  const userGoodDeeds = useSelector(
+    (state: RootState) => state.goodDeeds.deeds,
+  );
+  const friendGoodDeeds = useSelector(
+    (state: RootState) => state.friends.friendDeeds,
+  );
   const userId = localStorage.getItem('userId');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newDeed, setNewDeed] = useState('');
@@ -23,10 +33,11 @@ const Dashboard = ({ friendId, friendName }: { friendId?: number, friendName?: s
   }, [dispatch, userId, friendId]);
 
   const displayName = friendName || 'Your';
-  const goodDeeds = friendId 
-    ? (friendGoodDeeds.find(fd => fd.friendId === friendId)?.deeds || []) 
+  const goodDeeds = friendId
+    ? friendGoodDeeds.find((fd) => fd.friendId === friendId)?.deeds || []
     : userGoodDeeds;
-  const title = displayName === 'Your' ? 'Your Good Deeds' : `${displayName}'s Good Deeds`;
+  const title =
+    displayName === 'Your' ? 'Your Good Deeds' : `${displayName}'s Good Deeds`;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -43,21 +54,24 @@ const Dashboard = ({ friendId, friendName }: { friendId?: number, friendName?: s
 
   const addNewDeed = async () => {
     if (userId) {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-deeds`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/good-deeds`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify({ userId: Number(userId), content: newDeed }),
         },
-        body: JSON.stringify({ userId: Number(userId), content: newDeed }), 
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
         dispatch(addDeed(data));
         closeModal();
       } else {
-        console.error('Failed to add deed:', await response.json()); 
+        console.error('Failed to add deed:', await response.json());
       }
     }
   };

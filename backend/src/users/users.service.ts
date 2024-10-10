@@ -13,15 +13,24 @@ export class UsersService {
   ) {}
 
   async findUserById(userId: number): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { userId }, relations: ['goodDeeds', 'friends'] });
+    return this.usersRepository.findOne({
+      where: { userId },
+      relations: ['goodDeeds', 'friends'],
+    });
   }
 
   async findUserByEmail(email: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { email }, relations: ['goodDeeds', 'friends'] });
+    return this.usersRepository.findOne({
+      where: { email },
+      relations: ['goodDeeds', 'friends'],
+    });
   }
 
   async findUserByUniqueTag(uniqueTag: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { uniqueTag }, relations: ['goodDeeds', 'friends'] });
+    return this.usersRepository.findOne({
+      where: { uniqueTag },
+      relations: ['goodDeeds', 'friends'],
+    });
   }
 
   async searchUsers(term: string): Promise<User[]> {
@@ -30,7 +39,11 @@ export class UsersService {
     });
   }
 
-  async createUser(input: { name: string; email: string; password: string }): Promise<User> {
+  async createUser(input: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<User> {
     const uniqueTag = `${input.name}${uuidv4().slice(0, 6)}`;
     const newUser: User = this.usersRepository.create({
       username: input.name,
@@ -74,15 +87,33 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
+
+
   async deleteUser(userId: number): Promise<void> {
     const user = await this.findUserById(userId);
     if (!user) {
       throw new Error('User not found');
     }
+
+    await this.usersRepository.createQueryBuilder()
+      .delete()
+      .from('good_deed')
+      .where('userId = :userId', { userId })
+      .execute();
+
+
+    await this.usersRepository.createQueryBuilder()
+      .delete()
+      .from('user_friends_user')
+      .where('userUserId_1 = :userId', { userId })
+      .orWhere('userUserId_2 = :userId', { userId })
+      .execute();
+
     await this.usersRepository.delete(userId);
   }
 
   async saveUser(user: User): Promise<User> {
     return this.usersRepository.save(user);
+  
   }
 }

@@ -11,7 +11,9 @@ import { AppDispatch, RootState } from '../store/store';
 export default function Home() {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated,
+  );
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -31,7 +33,7 @@ export default function Home() {
         {isAuthenticated ? (
           <Dashboard />
         ) : (
-          <button 
+          <button
             className="tracking-widest font-semibold uppercase text-xl mx-auto border shadow-md text-white px-8 py-3 rounded hover:opacity-80 transition duration-300 hover:-translate-y-1"
             onClick={handleStartClick}
           >

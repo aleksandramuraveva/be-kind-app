@@ -1,7 +1,5 @@
 'use client'
 
-'use client';
-
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../store/store';

@@ -14,7 +14,13 @@ const FriendsList = ({ friends, onFriendClick, onDeleteFriend }) => {
           className="text-shadow3 flex text-my-blue items-center cursor-pointer hover:text-white"
         >
           <span className="text-red-500 mr-1">❤️</span>
-          <span onClick={() => { onFriendClick(friend.userId); dispatch(fetchFriendDeeds(friend.userId)); }} className="mr-2">
+          <span
+            onClick={() => {
+              onFriendClick(friend.userId);
+              dispatch(fetchFriendDeeds(friend.userId));
+            }}
+            className="mr-2"
+          >
             {friend.username}
           </span>
           <button

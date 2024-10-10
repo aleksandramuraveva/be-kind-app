@@ -1,4 +1,8 @@
-import { Injectable, ForbiddenException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
 import { GoodDeed } from '../good-deeds/entities/good-deed.entity';
@@ -7,7 +11,10 @@ import { GoodDeed } from '../good-deeds/entities/good-deed.entity';
 export class FriendsService {
   constructor(private usersService: UsersService) {}
 
-  async addFriend(userId: number, friendUniqueTag: string): Promise<Partial<User>> {
+  async addFriend(
+    userId: number,
+    friendUniqueTag: string,
+  ): Promise<Partial<User>> {
     const user = await this.usersService.findUserById(userId);
     const friend = await this.usersService.findUserByUniqueTag(friendUniqueTag);
 
@@ -36,23 +43,25 @@ export class FriendsService {
     };
   }
 
- async removeFriend(userId: number, friendId: number): Promise<void> {
-  const user = await this.usersService.findUserById(userId);
-  const friend = await this.usersService.findUserById(friendId);
+  async removeFriend(userId: number, friendId: number): Promise<void> {
+    const user = await this.usersService.findUserById(userId);
+    const friend = await this.usersService.findUserById(friendId);
 
-  if (!user || !friend) {
-    throw new NotFoundException('User or Friend not found');
+    if (!user || !friend) {
+      throw new NotFoundException('User or Friend not found');
+    }
+
+    user.friends = user.friends.filter((f) => f.userId !== friendId);
+    friend.friends = friend.friends.filter((f) => f.userId !== userId);
+
+    await this.usersService.saveUser(user);
+    await this.usersService.saveUser(friend);
   }
 
-  user.friends = user.friends.filter((f) => f.userId !== friendId);
-  friend.friends = friend.friends.filter((f) => f.userId !== userId);
-
-  await this.usersService.saveUser(user);
-  await this.usersService.saveUser(friend);
-}
-
-
-  async getFriendsWithDeeds(authUserId: number, userId: number): Promise<
+  async getFriendsWithDeeds(
+    authUserId: number,
+    userId: number,
+  ): Promise<
     {
       userId: number;
       username: string;

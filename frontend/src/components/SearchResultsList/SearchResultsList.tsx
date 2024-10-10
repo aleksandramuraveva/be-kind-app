@@ -13,7 +13,9 @@ const SearchResultsList = ({ results }) => {
 
   const handleAddFriend = (friendUniqueTag) => {
     dispatch(addFriend(friendUniqueTag)).then(() => {
-      const newResults = updatedResults.filter(result => result.uniqueTag !== friendUniqueTag);
+      const newResults = updatedResults.filter(
+        (result) => result.uniqueTag !== friendUniqueTag,
+      );
       setUpdatedResults(newResults);
     });
   };

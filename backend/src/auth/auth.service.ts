@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -20,8 +25,6 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-
-
   async register(input: RegisterInput): Promise<AuthResult> {
     try {
       const hashedPassword = await bcrypt.hash(input.password, 10);
@@ -36,10 +39,13 @@ export class AuthService {
         uniqueTag: user.uniqueTag,
       });
     } catch (error) {
-      if (error.code === '23505') { 
+      if (error.code === '23505') {
         throw new HttpException('Email already in use', HttpStatus.CONFLICT);
       }
-      throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -55,7 +61,7 @@ export class AuthService {
     input: AuthInput,
   ): Promise<(SignInData & { uniqueTag: string }) | null> {
     const user = await this.usersService.findUserByEmail(input.email);
-    if (user && await bcrypt.compare(input.password, user.password)) {
+    if (user && (await bcrypt.compare(input.password, user.password))) {
       return {
         userId: user.userId,
         username: user.username,
