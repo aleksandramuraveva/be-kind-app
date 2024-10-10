@@ -2,25 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { fetchGoodDeeds, addDeed } from '../../store/goodDeedsSlice';
+import { fetchFriendDeeds } from '../../store/friendsSlice';
 import GoodDeedsList from '../GoodDeedsList/GoodDeedsList';
 import Modal from '../Modal/Modal';
 
-const Dashboard = ({ friendName }: { friendName?: string }) => {
+const Dashboard = ({ friendId, friendName }: { friendId?: number, friendName?: string }) => {
   const dispatch: AppDispatch = useDispatch();
-  const goodDeeds = useSelector((state: RootState) => state.goodDeeds.deeds);
+  const userGoodDeeds = useSelector((state: RootState) => state.goodDeeds.deeds);
+  const friendGoodDeeds = useSelector((state: RootState) => state.friends.friendDeeds);
   const userId = localStorage.getItem('userId');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newDeed, setNewDeed] = useState('');
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !friendId) {
       dispatch(fetchGoodDeeds(userId));
+    } else if (friendId) {
+      dispatch(fetchFriendDeeds(friendId));
     }
-  }, [dispatch, userId]);
+  }, [dispatch, userId, friendId]);
 
   const displayName = friendName || 'Your';
-  const title =
-    displayName === 'Your' ? 'Your Good Deeds' : `${displayName}'s Good Deeds`;
+  const goodDeeds = friendId 
+    ? (friendGoodDeeds.find(fd => fd.friendId === friendId)?.deeds || []) 
+    : userGoodDeeds;
+  const title = displayName === 'Your' ? 'Your Good Deeds' : `${displayName}'s Good Deeds`;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -36,26 +42,25 @@ const Dashboard = ({ friendName }: { friendName?: string }) => {
   };
 
   const addNewDeed = async () => {
-  if (userId) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-deeds`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify({ userId: Number(userId), content: newDeed }), 
-    });
+    if (userId) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-deeds`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ userId: Number(userId), content: newDeed }), 
+      });
 
-    if (response.ok) {
-      const data = await response.json();
-      dispatch(addDeed(data));
-      closeModal();
-    } else {
-      console.error('Failed to add deed:', await response.json()); 
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(addDeed(data));
+        closeModal();
+      } else {
+        console.error('Failed to add deed:', await response.json()); 
+      }
     }
-  }
-};
-
+  };
 
   return (
     <section className="relative p-4 mt-10 mx-auto w-full">
@@ -82,23 +87,25 @@ const Dashboard = ({ friendName }: { friendName?: string }) => {
         ownDashboard={displayName === 'Your'}
         goodDeeds={goodDeeds}
       />
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <textarea
-          value={newDeed}
-          onChange={handleNewDeedChange}
-          className="w-full p-2 border border-gray-300 rounded"
-          rows="4"
-          placeholder="Describe your good deed..."
-        />
-        <div className="flex justify-end mt-4">
-          <button
-            onClick={addNewDeed}
-            className="bg-my-blue text-white px-4 py-2 rounded"
-          >
-            Add Deed
-          </button>
-        </div>
-      </Modal>
+      {displayName === 'Your' && (
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <textarea
+            value={newDeed}
+            onChange={handleNewDeedChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            rows="4"
+            placeholder="Describe your good deed..."
+          />
+          <div className="flex justify-end mt-4">
+            <button
+              onClick={addNewDeed}
+              className="bg-my-blue text-white px-4 py-2 rounded"
+            >
+              Add Deed
+            </button>
+          </div>
+        </Modal>
+      )}
     </section>
   );
 };

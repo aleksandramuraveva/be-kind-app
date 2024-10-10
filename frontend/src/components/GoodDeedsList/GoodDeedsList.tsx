@@ -6,20 +6,12 @@ import Card from '../Card/Card';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 import Modal from '../Modal/Modal';
 
-const GoodDeedsList = ({ ownDashboard }) => {
+const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goodDeeds: GoodDeed[] }) => {
   const dispatch: AppDispatch = useDispatch();
-  const goodDeeds = useSelector((state: RootState) => state.goodDeeds.deeds);
   const [visible, setVisible] = useState(6);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState<number | null>(null);
   const [currentCardContent, setCurrentCardContent] = useState('');
-  const userId = localStorage.getItem('userId');
-
-  useEffect(() => {
-    if (userId) {
-      dispatch(fetchGoodDeeds(userId));
-    }
-  }, [dispatch, userId]);
 
   const showMoreCards = () => {
     setVisible((prevVisible) => prevVisible + 6);
@@ -80,7 +72,7 @@ const GoodDeedsList = ({ ownDashboard }) => {
   return (
     <div className="p-4">
       <div className="flex flex-wrap gap-4 justify-center items-stretch">
-        {Array.isArray(goodDeeds) && goodDeeds.slice(0, visible).map((deed, index) => ( // Add type check
+        {Array.isArray(goodDeeds) && goodDeeds.slice(0, visible).map((deed, index) => (
           <Card
             key={deed.id}
             content={deed.content}
@@ -90,7 +82,7 @@ const GoodDeedsList = ({ ownDashboard }) => {
         ))}
       </div>
       {visible < goodDeeds.length && <ShowMoreButton onClick={showMoreCards} />}
-      <Modal isOpen={isModalOpen} onClose={closeModal} onSave={saveChanges}>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
         <textarea
           value={currentCardContent}
           onChange={handleEditChange}
