@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { addFriend } from '../../store/friendsSlice';
@@ -6,6 +6,10 @@ import { addFriend } from '../../store/friendsSlice';
 const SearchResultsList = ({ results }) => {
   const dispatch: AppDispatch = useDispatch();
   const [updatedResults, setUpdatedResults] = useState(results);
+
+  useEffect(() => {
+    setUpdatedResults(results);
+  }, [results]);
 
   const handleAddFriend = (friendUniqueTag) => {
     dispatch(addFriend(friendUniqueTag)).then(() => {
@@ -40,4 +44,3 @@ const SearchResultsList = ({ results }) => {
 };
 
 export default SearchResultsList;
-

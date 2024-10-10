@@ -42,7 +42,8 @@ const FriendsPage = () => {
   const handleDeleteFriend = (friendId: number) => {
     dispatch(deleteFriend(friendId)).then(() => {
       if (userId) {
-        dispatch(fetchFriends(Number(userId))); // Fetch updated friends list
+        dispatch(fetchFriends(Number(userId)));
+        setSelectedFriend(null);
       }
     });
   };
