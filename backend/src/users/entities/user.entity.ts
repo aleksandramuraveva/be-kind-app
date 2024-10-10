@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
 import { GoodDeed } from '../../good-deeds/entities/good-deed.entity';
 
 @Entity()
@@ -18,7 +25,7 @@ export class User {
   @Column()
   uniqueTag: string;
 
-  @OneToMany(() => GoodDeed, goodDeed => goodDeed.user)
+  @OneToMany(() => GoodDeed, (goodDeed) => goodDeed.user)
   goodDeeds: GoodDeed[];
 
   @ManyToMany(() => User)
@@ -31,4 +38,3 @@ export class User {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 }
-

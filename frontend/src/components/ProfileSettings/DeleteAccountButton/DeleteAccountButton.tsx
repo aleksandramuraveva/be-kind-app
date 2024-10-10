@@ -1,6 +1,4 @@
-'use client';
-
-'use client';
+'use client'
 
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
@@ -14,16 +12,13 @@ const DeleteAccountButton = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
-      );
+      });
 
       if (response.ok) {
         localStorage.removeItem('token');
@@ -42,8 +37,8 @@ const DeleteAccountButton = () => {
   };
 
   return (
-    <button
-      onClick={handleDeleteAccount}
+    <button 
+      onClick={handleDeleteAccount} 
       className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300"
     >
       Delete Account

@@ -13,4 +13,3 @@ import { User } from '../users/entities/user.entity';
   providers: [GoodDeedsService, UsersService, FriendsService],
 })
 export class GoodDeedsModule {}
-

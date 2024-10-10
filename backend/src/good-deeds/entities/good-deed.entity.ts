@@ -12,7 +12,7 @@ export class GoodDeed {
   @Column()
   content: string;
 
-  @ManyToOne(() => User, user => user.goodDeeds)
+  @ManyToOne(() => User, (user) => user.goodDeeds)
   user: User;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
