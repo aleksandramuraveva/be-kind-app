@@ -87,15 +87,33 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
+
+
   async deleteUser(userId: number): Promise<void> {
     const user = await this.findUserById(userId);
     if (!user) {
       throw new Error('User not found');
     }
+
+    await this.usersRepository.createQueryBuilder()
+      .delete()
+      .from('good_deed')
+      .where('userId = :userId', { userId })
+      .execute();
+
+
+    await this.usersRepository.createQueryBuilder()
+      .delete()
+      .from('user_friends_user')
+      .where('userUserId_1 = :userId', { userId })
+      .orWhere('userUserId_2 = :userId', { userId })
+      .execute();
+
     await this.usersRepository.delete(userId);
   }
 
   async saveUser(user: User): Promise<User> {
     return this.usersRepository.save(user);
+  
   }
 }
