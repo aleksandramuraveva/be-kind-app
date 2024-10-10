@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { fetchGoodDeeds, addDeed } from '../../store/goodDeedsSlice';
 import GoodDeedsList from '../GoodDeedsList/GoodDeedsList';
 import Modal from '../Modal/Modal';
 
-const Dashboard = ({ friendName }) => {
+const Dashboard = ({ friendName }: { friendName?: string }) => {
+  const dispatch: AppDispatch = useDispatch();
+  const goodDeeds = useSelector((state: RootState) => state.goodDeeds.deeds);
+  const userId = localStorage.getItem('userId');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newDeed, setNewDeed] = useState('');
-  const [addedDeed, setAddedDeed] = useState(null);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchGoodDeeds(userId));
+    }
+  }, [dispatch, userId]);
 
   const displayName = friendName || 'Your';
   const title =
@@ -20,14 +31,31 @@ const Dashboard = ({ friendName }) => {
     setNewDeed('');
   };
 
-  const handleNewDeedChange = (e) => {
+  const handleNewDeedChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewDeed(e.target.value);
   };
 
-  const addNewDeed = () => {
-    setAddedDeed(newDeed);
-    closeModal();
-  };
+  const addNewDeed = async () => {
+  if (userId) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-deeds`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ userId: Number(userId), content: newDeed }), 
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(addDeed(data));
+      closeModal();
+    } else {
+      console.error('Failed to add deed:', await response.json()); 
+    }
+  }
+};
+
 
   return (
     <section className="relative p-4 mt-10">
@@ -50,8 +78,9 @@ const Dashboard = ({ friendName }) => {
         </button>
       )}
       <GoodDeedsList
-        addedDeed={addedDeed}
+        addedDeed={newDeed}
         ownDashboard={displayName === 'Your'}
+        goodDeeds={goodDeeds}
       />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <textarea
