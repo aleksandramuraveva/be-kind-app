@@ -1,41 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { fetchGoodDeeds, updateDeed, deleteDeed } from '../../store/goodDeedsSlice';
 import Card from '../Card/Card';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 import Modal from '../Modal/Modal';
 
-const GoodDeedsList = ({ addedDeed, ownDashboard }) => {
+const GoodDeedsList = ({ ownDashboard }) => {
+  const dispatch: AppDispatch = useDispatch();
+  const goodDeeds = useSelector((state: RootState) => state.goodDeeds.deeds);
   const [visible, setVisible] = useState(6);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentCardIndex, setCurrentCardIndex] = useState(null);
+  const [currentCardIndex, setCurrentCardIndex] = useState<number | null>(null);
   const [currentCardContent, setCurrentCardContent] = useState('');
-
-  const initialCards = [
-    'Good deed 1',
-    'Good deed 2',
-    'Good deed 3',
-    'Good deed 4',
-    'Good deed 5',
-    'Good deed 6',
-    'Good deed 7',
-    'Good deed 4',
-    'Good deed 5',
-    'Good deed 6',
-    'Good deed 7',
-  ];
-
-  const [cards, setCards] = useState(initialCards);
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
-    if (addedDeed) {
-      setCards((prevCards) => [addedDeed, ...prevCards]);
+    if (userId) {
+      dispatch(fetchGoodDeeds(userId));
     }
-  }, [addedDeed]);
+  }, [dispatch, userId]);
 
   const showMoreCards = () => {
     setVisible((prevVisible) => prevVisible + 6);
   };
 
-  const openModal = (content, index) => {
+  const openModal = (content: string, index: number) => {
     setCurrentCardContent(content);
     setCurrentCardIndex(index);
     setIsModalOpen(true);
@@ -47,35 +37,59 @@ const GoodDeedsList = ({ addedDeed, ownDashboard }) => {
     setCurrentCardIndex(null);
   };
 
-  const handleEditChange = (e) => {
+  const handleEditChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCurrentCardContent(e.target.value);
   };
 
-  const saveChanges = () => {
-    const updatedCards = [...cards];
-    updatedCards[currentCardIndex] = currentCardContent;
-    setCards(updatedCards);
-    closeModal();
+  const saveChanges = async () => {
+    if (currentCardIndex !== null) {
+      const updatedDeed = { id: goodDeeds[currentCardIndex].id, content: currentCardContent };
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-deeds/${updatedDeed.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ content: currentCardContent }),
+      });
+
+      if (response.ok) {
+        dispatch(updateDeed(updatedDeed));
+        closeModal();
+      }
+    }
   };
 
-  const deleteCard = (index) => {
-    const updatedCards = cards.filter((_, i) => i !== index);
-    setCards(updatedCards);
+  const deleteCard = async (index: number) => {
+    const deedId = goodDeeds[index].id;
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-deeds/${deedId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    if (response.ok) {
+      dispatch(deleteDeed(deedId));
+    }
   };
 
   return (
     <div className="p-4">
-      <div className="flex flex-wrap gap-4 justify-center">
-        {cards.slice(0, visible).map((content, index) => (
+      <div className="flex flex-wrap gap-4 justify-center items-stretch">
+        {Array.isArray(goodDeeds) && goodDeeds.slice(0, visible).map((deed, index) => ( // Add type check
           <Card
-            key={index}
-            content={content}
-            onEdit={ownDashboard ? () => openModal(content, index) : null}
+            key={deed.id}
+            content={deed.content}
+            onEdit={ownDashboard ? () => openModal(deed.content, index) : null}
             onDelete={ownDashboard ? () => deleteCard(index) : null}
           />
         ))}
       </div>
-      {visible < cards.length && <ShowMoreButton onClick={showMoreCards} />}
+      {visible < goodDeeds.length && <ShowMoreButton onClick={showMoreCards} />}
       <Modal isOpen={isModalOpen} onClose={closeModal} onSave={saveChanges}>
         <textarea
           value={currentCardContent}

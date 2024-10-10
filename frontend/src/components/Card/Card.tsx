@@ -1,6 +1,6 @@
 const Card = ({ onEdit, onDelete, content }) => {
   return (
-    <div className="relative block min-w-[250px] max-w-[300px] min-h-[150px] p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="flex-1 relative block min-w-[250px] max-w-[300px] min-h-[150px] p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <p className="text-shadow2 tracking-wider font-semibold text-my-pink font-normal text-gray-700 dark:text-gray-400 break-words py-3">
         {content}
       </p>
