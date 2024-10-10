@@ -7,7 +7,7 @@ import { GoodDeed } from '../good-deeds/entities/good-deed.entity';
 export class FriendsService {
   constructor(private usersService: UsersService) {}
 
-  async addFriend(userId: number, friendUniqueTag: string): Promise<User> { // Return User
+  async addFriend(userId: number, friendUniqueTag: string): Promise<Partial<User>> {
     const user = await this.usersService.findUserById(userId);
     const friend = await this.usersService.findUserByUniqueTag(friendUniqueTag);
 
@@ -29,8 +29,28 @@ export class FriendsService {
     await this.usersService.saveUser(user);
     await this.usersService.saveUser(friend);
 
-    return friend; 
+    return {
+      userId: friend.userId,
+      username: friend.username,
+      uniqueTag: friend.uniqueTag,
+    };
   }
+
+ async removeFriend(userId: number, friendId: number): Promise<void> {
+  const user = await this.usersService.findUserById(userId);
+  const friend = await this.usersService.findUserById(friendId);
+
+  if (!user || !friend) {
+    throw new NotFoundException('User or Friend not found');
+  }
+
+  user.friends = user.friends.filter((f) => f.userId !== friendId);
+  friend.friends = friend.friends.filter((f) => f.userId !== userId);
+
+  await this.usersService.saveUser(user);
+  await this.usersService.saveUser(friend);
+}
+
 
   async getFriendsWithDeeds(authUserId: number, userId: number): Promise<
     {

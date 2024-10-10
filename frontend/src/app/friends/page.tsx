@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { searchFriends, addFriend, fetchFriendDeeds, fetchFriends } from '../../store/friendsSlice';
+import { searchFriends, addFriend, fetchFriendDeeds, fetchFriends, deleteFriend } from '../../store/friendsSlice';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import SearchResultsList from '../../components/SearchResultsList/SearchResultsList';
 import FriendsList from '../../components/FriendsList/FriendsList';
@@ -13,7 +13,7 @@ const FriendsPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const { friends, searchResults, friendDeeds } = useSelector((state: RootState) => state.friends);
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
-  const userId = (typeof window !== 'undefined') ? localStorage.getItem('userId') : null; // Check if window is defined
+  const userId = (typeof window !== 'undefined') ? localStorage.getItem('userId') : null; 
 
   useEffect(() => {
     if (userId) {
@@ -34,13 +34,17 @@ const FriendsPage = () => {
   const handleAddFriend = (friendUniqueTag: string) => {
     dispatch(addFriend(friendUniqueTag)).then(() => {
       if (userId) {
-        dispatch(fetchFriends(Number(userId))); // Fetch updated friends list
+        dispatch(fetchFriends(Number(userId))); 
       }
     });
   };
 
-  const handleDeleteFriend = (index: number) => {
-    // Implement delete friend functionality
+  const handleDeleteFriend = (friendId: number) => {
+    dispatch(deleteFriend(friendId)).then(() => {
+      if (userId) {
+        dispatch(fetchFriends(Number(userId))); // Fetch updated friends list
+      }
+    });
   };
 
   return (
@@ -67,11 +71,9 @@ const FriendsPage = () => {
           onDeleteFriend={handleDeleteFriend}
         />
       </div>
-      {selectedFriend && <Dashboard friendId={selectedFriend.userId} friendName={selectedFriend.username} />} {/* Pass friendId and friendName to Dashboard */}
+      {selectedFriend && <Dashboard friendId={selectedFriend.userId} friendName={selectedFriend.username} />}
     </div>
   );
 };
 
 export default FriendsPage;
-
-

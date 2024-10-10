@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Param, Body, UseGuards, Req } from '@nestjs/common';
 import { FriendsService } from './friends.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RequestWithUser } from '../dto/request-with-user.dto';
@@ -20,8 +20,17 @@ export class FriendsController {
       userId: friend.userId,
       username: friend.username,
       uniqueTag: friend.uniqueTag,
-    }; 
+    };
   }
+
+  @Delete(':friendId')
+async deleteFriend(@Param('friendId') friendId: string, @Req() req: RequestWithUser) {
+  const userId = req.user.userId;
+  console.log('Delete Friend - Request User ID:', userId);
+  await this.friendsService.removeFriend(userId, Number(friendId)); 
+  return { success: true };
+}
+
 
   @Get(':userId')
   async getFriends(@Param('userId') userId: string, @Req() req: RequestWithUser) {

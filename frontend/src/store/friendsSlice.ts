@@ -9,7 +9,6 @@ interface Friend {
 
 interface FriendDeed {
   friendId: number;
-  deeds: GoodDeed[];
 }
 
 interface FriendsState {
@@ -51,6 +50,21 @@ export const addFriend = createAsyncThunk('friends/addFriend', async (friendUniq
   const data = await response.json();
   return data;
 });
+
+export const deleteFriend = createAsyncThunk('friends/deleteFriend', async (friendId: number) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/friends/${friendId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete friend');
+  }
+  return friendId;
+});
+
 
 export const fetchFriendDeeds = createAsyncThunk('friends/fetchFriendDeeds', async (friendId: number) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-deeds/${friendId}`, {
@@ -97,6 +111,9 @@ const friendsSlice = createSlice({
       .addCase(addFriend.fulfilled, (state, action: PayloadAction<Friend>) => {
         state.friends.push(action.payload);
       })
+      .addCase(deleteFriend.fulfilled, (state, action: PayloadAction<number>) => {
+        state.friends = state.friends.filter(friend => friend.userId !== action.payload);
+       })
       .addCase(fetchFriendDeeds.pending, (state) => {
         state.status = 'loading';
       })
