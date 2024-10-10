@@ -18,6 +18,22 @@ cd be-kind-app
 
 Ensure you have the necessary environment variables in your .env files for both backend and frontend.
 
+**Backend** 
+.env
+```
+DATABASE_HOST=db
+DATABASE_PORT=5432
+DATABASE_USER=bekinduser
+DATABASE_PASSWORD=bekindpassword
+DATABASE_NAME=bekinddb
+JWT_SECRET=super_secret_key
+```
+**Frontend**
+.env.local
+```
+NEXT_PUBLIC_API_URL=http://localhost:4000
+```
+
 ## Starting the Application
 
 ```
