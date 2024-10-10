@@ -7,7 +7,7 @@ import { AppDispatch } from '../../../store/store';
 import { updateUsername } from '../../../store/authSlice';
 import { signUpValidationSchema } from '../../../utils/validationSchema';
 
-const UsernameForm = () => {
+const UsernameForm = ({ onUpdate }: { onUpdate: (username: string) => void }) => {
   const dispatch: AppDispatch = useDispatch();
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
@@ -33,8 +33,14 @@ const UsernameForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        dispatch(updateUsername(data.name));
-        setFormSuccess('Your name was updated successfully!');
+        if (data.username) {
+          dispatch(updateUsername(data.username));
+          localStorage.setItem('username', data.username);
+          onUpdate(data.username);
+          setFormSuccess('Your name was updated successfully!');
+        } else {
+          setFormError('Failed to update username.');
+        }
       } else {
         const errorData = await response.json();
         setFormError('Failed to update username.');
