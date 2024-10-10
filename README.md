@@ -21,7 +21,7 @@ Ensure you have the necessary environment variables in your .env files for both 
 ## Starting the Application
 
 ```
-docker-compose up
+docker-compose up --build
 ```
 This will start the backend, frontend, and the PostgreSQL database.
 
