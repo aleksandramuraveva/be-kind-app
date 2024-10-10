@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 const Card = ({ onEdit, onDelete, content, date }) => {
   return (
     <div className="flex-1 relative block min-w-[250px] max-w-[300px] min-h-[150px] p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
