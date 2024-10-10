@@ -58,7 +58,7 @@ const Dashboard = ({ friendName }: { friendName?: string }) => {
 
 
   return (
-    <section className="relative p-4 mt-10">
+    <section className="relative p-4 mt-10 mx-auto w-full">
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <img
           src="/images/wings.png"

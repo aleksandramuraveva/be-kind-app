@@ -77,9 +77,9 @@ const GoodDeedsList = ({ ownDashboard }) => {
     }
   };
 
-  return (
+    return (
     <div className="p-4">
-      <div className="flex flex-wrap gap-4 justify-center">
+      <div className="flex flex-wrap gap-4 justify-center items-stretch">
         {goodDeeds.slice(0, visible).map((deed, index) => (
           <Card
             key={deed.id}
