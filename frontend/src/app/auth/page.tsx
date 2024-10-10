@@ -8,16 +8,18 @@ import Auth from '../../components/Auth/Auth';
 
 const AuthPage = () => {
   const router = useRouter();
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated,
+  );
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/'); 
+      router.push('/');
     }
   }, [isAuthenticated, router]);
 
   if (isAuthenticated) {
-    return null; 
+    return null;
   }
 
   return (

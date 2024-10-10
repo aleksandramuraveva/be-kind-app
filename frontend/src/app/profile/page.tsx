@@ -8,16 +8,18 @@ import ProfileSettings from '../../components/ProfileSettings/ProfileSettings';
 
 const ProfilePage = () => {
   const router = useRouter();
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated,
+  );
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/auth'); 
+      router.push('/auth');
     }
   }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    return null; 
+    return null;
   }
 
   return (

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -13,20 +13,23 @@ const UsernameForm = () => {
   const [formSuccess, setFormSuccess] = useState('');
   const initialValues = { name: '' };
   const userId = localStorage.getItem('userId');
-  const token = localStorage.getItem('token'); 
+  const token = localStorage.getItem('token');
 
   const onSubmit = async (values: typeof initialValues) => {
     setFormError('');
     setFormSuccess('');
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}/name`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}/name`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
         },
-        body: JSON.stringify(values),
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -51,13 +54,30 @@ const UsernameForm = () => {
       >
         <Form className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-md font-medium mb-1">New Username</label>
-            <Field name="name" type="text" className="w-full px-3 py-2 border rounded-md text-black" />
-            <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
+            <label htmlFor="name" className="block text-md font-medium mb-1">
+              New Username
+            </label>
+            <Field
+              name="name"
+              type="text"
+              className="w-full px-3 py-2 border rounded-md text-black"
+            />
+            <ErrorMessage
+              name="name"
+              component="div"
+              className="text-red-500 text-sm"
+            />
           </div>
           {formError && <div className="text-red-500 text-sm">{formError}</div>}
-          {formSuccess && <div className="text-green-600 text-sm">{formSuccess}</div>}
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md">Update</button>
+          {formSuccess && (
+            <div className="text-green-600 text-sm">{formSuccess}</div>
+          )}
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+          >
+            Update
+          </button>
         </Form>
       </Formik>
     </div>

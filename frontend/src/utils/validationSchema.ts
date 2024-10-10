@@ -37,4 +37,3 @@ export const signInValidationSchema = Yup.object({
     .matches(/\d/, 'Password must contain at least one number')
     .required('Required'),
 });
-

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
   isAuthenticated: boolean;
-  username?: string; 
+  username?: string;
 }
 
 const initialState: AuthState = {
@@ -18,7 +18,7 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.isAuthenticated = false;
-      state.username = undefined; 
+      state.username = undefined;
     },
     updateUsername: (state, action: PayloadAction<string>) => {
       state.username = action.payload;

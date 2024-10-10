@@ -28,4 +28,3 @@ const Card = ({ onEdit, onDelete, content, date }) => {
 };
 
 export default Card;
-

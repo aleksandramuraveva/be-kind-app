@@ -6,7 +6,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     goodDeeds: goodDeedsReducer,
-    friends: friendsReducer, 
+    friends: friendsReducer,
   },
 });
 

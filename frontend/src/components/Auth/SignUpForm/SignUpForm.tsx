@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import { signUpValidationSchema } from '../../../utils/validationSchema';
-import { useDispatch } from 'react-redux'; 
-import { login } from '../../../store/authSlice'; 
-import { AppDispatch } from '../../../store/store'; 
+import { useDispatch } from 'react-redux';
+import { login } from '../../../store/authSlice';
+import { AppDispatch } from '../../../store/store';
 const SignUpForm: React.FC = () => {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
@@ -14,13 +14,16 @@ const SignUpForm: React.FC = () => {
   const onSubmit = async (values: typeof initialValues) => {
     setFormError('');
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
         },
-        body: JSON.stringify(values),
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -104,11 +107,7 @@ const SignUpForm: React.FC = () => {
             className="text-red-500 text-sm"
           />
         </div>
-        {formError && (
-          <div className="text-red-500 text-sm">
-            {formError}
-          </div>
-        )}
+        {formError && <div className="text-red-500 text-sm">{formError}</div>}
         <button
           type="submit"
           className="w-full px-4 py-2 font-semibold text-white bg-my-pink rounded-md"

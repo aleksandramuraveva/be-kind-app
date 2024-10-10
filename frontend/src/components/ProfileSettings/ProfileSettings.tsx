@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import UsernameForm from './UsernameForm/UsernameForm';
@@ -7,8 +7,10 @@ import PasswordForm from './PasswordForm/PasswordForm';
 import DeleteAccountButton from './DeleteAccountButton/DeleteAccountButton';
 
 const ProfileSettings = () => {
-  const username = (typeof window !== 'undefined') ? localStorage.getItem('username') : '';
-  const uniqueId = (typeof window !== 'undefined') ? localStorage.getItem('uniqueId') : '';
+  const username =
+    typeof window !== 'undefined' ? localStorage.getItem('username') : '';
+  const uniqueId =
+    typeof window !== 'undefined' ? localStorage.getItem('uniqueId') : '';
 
   return (
     <div className="p-8 space-y-8 mx-auto mb-20 text-white">
@@ -26,4 +28,3 @@ const ProfileSettings = () => {
 };
 
 export default ProfileSettings;
-
