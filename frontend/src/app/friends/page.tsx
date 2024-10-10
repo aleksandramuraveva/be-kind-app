@@ -8,12 +8,28 @@ import SearchInput from '../../components/SearchInput/SearchInput';
 import SearchResultsList from '../../components/SearchResultsList/SearchResultsList';
 import FriendsList from '../../components/FriendsList/FriendsList';
 import Dashboard from '../../components/Dashboard/Dashboard';
+import { useRouter } from 'next/navigation';
 
 const FriendsPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const { friends, searchResults, friendDeeds } = useSelector((state: RootState) => state.friends);
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
   const userId = (typeof window !== 'undefined') ? localStorage.getItem('userId') : null; 
+
+  const router = useRouter();
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/auth'); 
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) {
+    return null; 
+  }
+
+
 
   useEffect(() => {
     if (userId) {
