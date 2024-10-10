@@ -1,39 +1,51 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { searchFriends, addFriend, fetchFriendDeeds, fetchFriends, deleteFriend } from '../../store/friendsSlice';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import SearchResultsList from '../../components/SearchResultsList/SearchResultsList';
 import FriendsList from '../../components/FriendsList/FriendsList';
 import Dashboard from '../../components/Dashboard/Dashboard';
 
 const FriendsPage = () => {
-  const [selectedFriend, setSelectedFriend] = useState(null);
-  const [searchResults, setSearchResults] = useState([]);
-  const [friends, setFriends] = useState(['Friend1', 'Friend2', 'Friend3']);
+  const dispatch: AppDispatch = useDispatch();
+  const { friends, searchResults, friendDeeds } = useSelector((state: RootState) => state.friends);
+  const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
+  const userId = (typeof window !== 'undefined') ? localStorage.getItem('userId') : null; 
 
-  const handleFriendClick = (friendName) => {
-    setSelectedFriend(friendName);
-  };
-
-  const handleSearch = (searchTerm) => {
-    if (searchTerm) {
-      const results = ['User1', 'User2', 'User3'].filter((user) =>
-        user.includes(searchTerm),
-      );
-      setSearchResults(results);
-    } else {
-      setSearchResults([]);
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchFriends(Number(userId)));
     }
+  }, [dispatch, userId]);
+
+  const handleFriendClick = (friendId: number) => {
+    setSelectedFriend(friends.find(friend => friend.userId === friendId) || null);
+    dispatch(fetchFriendDeeds(friendId));
+    console.log('Friend ID:', friendId);
   };
 
-  const handleAddFriend = (friend) => {
-    setFriends([...friends, friend]);
-    setSearchResults(searchResults.filter((result) => result !== friend));
+  const handleSearch = (searchTerm: string) => {
+    dispatch(searchFriends(searchTerm));
   };
 
-  const handleDeleteFriend = (index) => {
-    const updatedFriends = friends.filter((_, i) => i !== index);
-    setFriends(updatedFriends);
+  const handleAddFriend = (friendUniqueTag: string) => {
+    dispatch(addFriend(friendUniqueTag)).then(() => {
+      if (userId) {
+        dispatch(fetchFriends(Number(userId))); 
+      }
+    });
+  };
+
+  const handleDeleteFriend = (friendId: number) => {
+    dispatch(deleteFriend(friendId)).then(() => {
+      if (userId) {
+        dispatch(fetchFriends(Number(userId)));
+        setSelectedFriend(null);
+      }
+    });
   };
 
   return (
@@ -60,7 +72,7 @@ const FriendsPage = () => {
           onDeleteFriend={handleDeleteFriend}
         />
       </div>
-      {selectedFriend && <Dashboard friendName={selectedFriend} />}
+      {selectedFriend && <Dashboard friendId={selectedFriend.userId} friendName={selectedFriend.username} />}
     </div>
   );
 };

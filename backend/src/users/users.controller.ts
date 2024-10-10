@@ -1,15 +1,4 @@
-import {
-  Controller,
-  Put,
-  Delete,
-  HttpCode,
-  HttpStatus,
-  Body,
-  UseGuards,
-  Param,
-  Req,
-  ForbiddenException,
-} from '@nestjs/common';
+import { Controller, Get, Put, Delete, Param, Body, Req, UseGuards, HttpCode, HttpStatus, ForbiddenException, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 
@@ -17,6 +6,11 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 @UseGuards(AuthGuard)
 export class UsersController {
   constructor(private usersService: UsersService) {}
+
+  @Get('search')
+  async searchUsers(@Query('term') term: string) {
+    return this.usersService.searchUsers(term);
+  }
 
   @HttpCode(HttpStatus.OK)
   @Put(':id/name')

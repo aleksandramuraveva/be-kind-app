@@ -5,7 +5,6 @@ import { User } from './entities/user.entity';
 import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
 
-
 @Injectable()
 export class UsersService {
   constructor(
@@ -19,6 +18,16 @@ export class UsersService {
 
   async findUserByEmail(email: string): Promise<User | undefined> {
     return this.usersRepository.findOne({ where: { email }, relations: ['goodDeeds', 'friends'] });
+  }
+
+  async findUserByUniqueTag(uniqueTag: string): Promise<User | undefined> {
+    return this.usersRepository.findOne({ where: { uniqueTag }, relations: ['goodDeeds', 'friends'] });
+  }
+
+  async searchUsers(term: string): Promise<User[]> {
+    return this.usersRepository.find({
+      where: [{ username: term }, { uniqueTag: term }],
+    });
   }
 
   async createUser(input: { name: string; email: string; password: string }): Promise<User> {
@@ -71,10 +80,6 @@ export class UsersService {
       throw new Error('User not found');
     }
     await this.usersRepository.delete(userId);
-  }
-
-  async findUserByUniqueTag(uniqueTag: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { uniqueTag }, relations: ['goodDeeds', 'friends'] });
   }
 
   async saveUser(user: User): Promise<User> {

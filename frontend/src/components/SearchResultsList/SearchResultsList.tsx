@@ -1,15 +1,34 @@
-const SearchResultsList = ({ results, onAddFriend }) => {
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { addFriend } from '../../store/friendsSlice';
+
+const SearchResultsList = ({ results }) => {
+  const dispatch: AppDispatch = useDispatch();
+  const [updatedResults, setUpdatedResults] = useState(results);
+
+  useEffect(() => {
+    setUpdatedResults(results);
+  }, [results]);
+
+  const handleAddFriend = (friendUniqueTag) => {
+    dispatch(addFriend(friendUniqueTag)).then(() => {
+      const newResults = updatedResults.filter(result => result.uniqueTag !== friendUniqueTag);
+      setUpdatedResults(newResults);
+    });
+  };
+
   return (
     <ul className="list-disc pl-5">
-      {results.map((result) => (
+      {updatedResults.map((result) => (
         <li
-          key={result}
+          key={result.userId}
           className="flex justify-between items-center mt-2 text-white"
         >
-          {result}
+          {result.username}
           <div className="relative group">
             <button
-              onClick={() => onAddFriend(result)}
+              onClick={() => handleAddFriend(result.uniqueTag)}
               className="text-sm ml-2 block mx-auto bg-white text-my-pink rounded-full w-5 h-5 flex items-center justify-center shadow-lg hover:opacity-80 transition duration-300 hover:-translate-y-0.5"
             >
               +
