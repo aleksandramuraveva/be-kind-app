@@ -31,10 +31,9 @@ const PasswordForm = () => {
         await response.json();
         setFormSuccess('Password updated successfully!');
       } else {
-        const errorData = await response.json();
         setFormError('Failed to update password.');
       }
-    } catch (error) {
+    } catch {
       setFormError('Network error. Please try again.');
     }
   };

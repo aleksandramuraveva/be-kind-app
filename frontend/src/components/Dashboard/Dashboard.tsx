@@ -5,6 +5,7 @@ import { fetchGoodDeeds, addDeed } from '../../store/goodDeedsSlice';
 import { fetchFriendDeeds } from '../../store/friendsSlice';
 import GoodDeedsList from '../GoodDeedsList/GoodDeedsList';
 import Modal from '../Modal/Modal';
+import Image from 'next/image';
 
 const Dashboard = ({
   friendId,
@@ -79,7 +80,7 @@ const Dashboard = ({
   return (
     <section className="relative p-4 mt-10 mx-auto w-full">
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <img
+        <Image
           src="/images/wings.png"
           alt="Wings"
           className="filter brightness-110"

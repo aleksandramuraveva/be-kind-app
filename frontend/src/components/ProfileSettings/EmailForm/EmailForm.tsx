@@ -31,10 +31,9 @@ const EmailForm = () => {
         await response.json();
         setFormSuccess('Email updated successfully!');
       } else {
-        const errorData = await response.json();
         setFormError('Failed to update email.');
       }
-    } catch (error) {
+    } catch {
       setFormError('Network error. Please try again.');
     }
   };

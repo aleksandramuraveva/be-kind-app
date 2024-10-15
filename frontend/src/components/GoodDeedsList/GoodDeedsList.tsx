@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
-import { fetchGoodDeeds, updateDeed, deleteDeed } from '../../store/goodDeedsSlice';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch} from '../../store/store';
+import { updateDeed, deleteDeed } from '../../store/goodDeedsSlice';
 import Card from '../Card/Card';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 import Modal from '../Modal/Modal';

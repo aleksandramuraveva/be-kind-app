@@ -31,7 +31,7 @@ const DeleteAccountButton = () => {
         const errorData = await response.json();
         console.error('Failed to delete account:', errorData);
       }
-    } catch (error) {
+    } catch {
       console.error('Network error. Please try again.');
     }
   };

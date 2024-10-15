@@ -42,7 +42,7 @@ const SignInForm: React.FC = () => {
           setFormError('Login failed. Please try again.');
         }
       }
-    } catch (error) {
+    } catch {
       setFormError('Network error. Please try again.');
     }
   };

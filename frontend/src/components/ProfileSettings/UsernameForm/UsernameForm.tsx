@@ -42,10 +42,9 @@ const UsernameForm = ({ onUpdate }: { onUpdate: (username: string) => void }) =>
           setFormError('Failed to update username.');
         }
       } else {
-        const errorData = await response.json();
         setFormError('Failed to update username.');
       }
-    } catch (error) {
+    } catch {
       setFormError('Network error. Please try again.');
     }
   };

@@ -41,7 +41,7 @@ const SignUpForm: React.FC = () => {
           setFormError('Registration failed. Please try again.');
         }
       }
-    } catch (error) {
+    } catch {
       setFormError('Network error. Please try again.');
     }
   };
