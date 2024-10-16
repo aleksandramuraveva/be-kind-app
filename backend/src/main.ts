@@ -2,12 +2,12 @@ import * as dotenv from 'dotenv';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
-// import { NestExpressApplication } from '@nestjs/platform-express';
-
 async function bootstrap() {
   dotenv.config();
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-  await app.listen(4000);
+  const port = process.env.PORT || 4000;
+  await app.listen(port);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

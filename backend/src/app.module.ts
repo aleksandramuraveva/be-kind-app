@@ -19,8 +19,9 @@ dotenv.config();
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: false,
     }),
     UsersModule,
     AuthModule,
@@ -31,3 +32,4 @@ dotenv.config();
   providers: [AppService],
 })
 export class AppModule {}
+
