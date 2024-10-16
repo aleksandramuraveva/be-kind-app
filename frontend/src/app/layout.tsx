@@ -8,7 +8,7 @@ import ClientProvider from '../components/ClientProvider/ClientProvider';
 const openSans = Open_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '-font-open-sans',
+  variable: '--font-open-sans',
   weight: ['300', '400', '500', '600', '700', '800'],
 });
 

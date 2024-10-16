@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import {
   searchFriends,
-  addFriend,
+  // addFriend,
   fetchFriendDeeds,
   fetchFriends,
   deleteFriend,
@@ -15,10 +15,11 @@ import SearchResultsList from '../../components/SearchResultsList/SearchResultsL
 import FriendsList from '../../components/FriendsList/FriendsList';
 import Dashboard from '../../components/Dashboard/Dashboard';
 import { useRouter } from 'next/navigation';
+import { Friend } from '../../types';
 
 const FriendsPage = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { friends, searchResults, friendDeeds } = useSelector(
+  const { friends, searchResults } = useSelector(
     (state: RootState) => state.friends,
   );
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
@@ -30,21 +31,22 @@ const FriendsPage = () => {
     (state: RootState) => state.auth.isAuthenticated,
   );
 
+
   useEffect(() => {
     if (!isAuthenticated) {
       router.push('/auth');
     }
   }, [isAuthenticated, router]);
 
-  if (!isAuthenticated) {
-    return null;
-  }
-
   useEffect(() => {
     if (userId) {
       dispatch(fetchFriends(Number(userId)));
     }
   }, [dispatch, userId]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const handleFriendClick = (friendId: number) => {
     setSelectedFriend(
@@ -58,13 +60,13 @@ const FriendsPage = () => {
     dispatch(searchFriends(searchTerm));
   };
 
-  const handleAddFriend = (friendUniqueTag: string) => {
-    dispatch(addFriend(friendUniqueTag)).then(() => {
-      if (userId) {
-        dispatch(fetchFriends(Number(userId)));
-      }
-    });
-  };
+  // const handleAddFriend = (friendUniqueTag: string) => {
+  //   dispatch(addFriend(friendUniqueTag)).then(() => {
+  //     if (userId) {
+  //       dispatch(fetchFriends(Number(userId)));
+  //     }
+  //   });
+  // };
 
   const handleDeleteFriend = (friendId: number) => {
     dispatch(deleteFriend(friendId)).then(() => {
@@ -84,7 +86,8 @@ const FriendsPage = () => {
         {searchResults.length > 0 ? (
           <SearchResultsList
             results={searchResults}
-            onAddFriend={handleAddFriend}
+            // onAddFriend={handleAddFriend}
+            
           />
         ) : (
           searchResults.length === 0 && (

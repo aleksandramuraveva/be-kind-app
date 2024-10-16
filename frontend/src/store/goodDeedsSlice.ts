@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import {GoodDeed} from '../types';
 
-interface GoodDeed {
-  id: number;
-  content: string;
-}
 
 interface GoodDeedsState {
   deeds: GoodDeed[];

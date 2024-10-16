@@ -6,8 +6,9 @@ import Card from '../Card/Card';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 import Modal from '../Modal/Modal';
 import { format } from 'date-fns';
+import {GoodDeed} from '../../types'
 
-const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goodDeeds: GoodDeed[] }) => {
+const GoodDeedsList: React.FC <{ ownDashboard: boolean, goodDeeds: GoodDeed[] }> = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goodDeeds: GoodDeed[] }) => {
   const dispatch: AppDispatch = useDispatch();
   const [visible, setVisible] = useState(6);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,9 +78,9 @@ const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goo
           <Card
             key={deed.id}
             content={deed.content}
-            date={deed.createdAt ? format(new Date(deed.createdAt), 'yyyy-MM-dd HH:mm:ss') : deed.updatedAt}
-            onEdit={ownDashboard ? () => openModal(deed.content, index) : null}
-            onDelete={ownDashboard ? () => deleteCard(index) : null}
+            date={deed.createdAt ? format(new Date(deed.createdAt), 'yyyy-MM-dd HH:mm:ss') : deed.updatedAt || ''}
+            onEdit={ownDashboard ? () => openModal(deed.content, index) : undefined}
+            onDelete={ownDashboard ? () => deleteCard(index) : undefined}
           />
         ))}
       
@@ -90,7 +91,7 @@ const GoodDeedsList = ({ ownDashboard, goodDeeds }: { ownDashboard: boolean, goo
           value={currentCardContent}
           onChange={handleEditChange}
           className="mt-4 w-full p-2 border border-gray-300 rounded"
-          rows="4"
+          rows={4}
         />
         <div className="flex justify-end mt-4">
           <button

@@ -2,8 +2,15 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { fetchFriendDeeds } from '../../store/friendsSlice';
+import { Friend } from '../../types';
 
-const FriendsList = ({ friends, onFriendClick, onDeleteFriend }) => {
+interface FriendsListProps {
+  friends: Friend[];
+  onFriendClick: (userId: number) => void;
+  onDeleteFriend: (userId: number) => void;
+}
+
+const FriendsList: React.FC<FriendsListProps> = ({ friends, onFriendClick, onDeleteFriend }) => {
   const dispatch: AppDispatch = useDispatch();
 
   return (

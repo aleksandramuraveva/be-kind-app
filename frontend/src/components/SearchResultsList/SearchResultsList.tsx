@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { addFriend } from '../../store/friendsSlice';
+import { Friend } from '../../types';
 
-const SearchResultsList = ({ results }) => {
+interface SearchResultsListProps {
+  results: Friend[];
+}
+
+const SearchResultsList: React.FC<SearchResultsListProps> = ({ results }) => {
   const dispatch: AppDispatch = useDispatch();
-  const [updatedResults, setUpdatedResults] = useState(results);
+  const [updatedResults, setUpdatedResults] = useState<Friend[]>(results);
 
   useEffect(() => {
     setUpdatedResults(results);
   }, [results]);
 
-  const handleAddFriend = (friendUniqueTag) => {
+  const handleAddFriend = (friendUniqueTag: string) => {
     dispatch(addFriend(friendUniqueTag)).then(() => {
       const newResults = updatedResults.filter(
         (result) => result.uniqueTag !== friendUniqueTag,

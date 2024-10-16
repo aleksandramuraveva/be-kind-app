@@ -1,4 +1,9 @@
-const ShowMoreButton = ({ onClick }) => {
+
+interface ShowMoreButtonProps {
+  onClick: () => void;
+}
+
+const ShowMoreButton: React.FC<ShowMoreButtonProps> = ({ onClick }) => {
   return (
     <div className="flex justify-center mt-4">
       <button
@@ -12,3 +17,4 @@ const ShowMoreButton = ({ onClick }) => {
 };
 
 export default ShowMoreButton;
+

@@ -6,13 +6,16 @@ import { fetchFriendDeeds } from '../../store/friendsSlice';
 import GoodDeedsList from '../GoodDeedsList/GoodDeedsList';
 import Modal from '../Modal/Modal';
 import Image from 'next/image';
+import {GoodDeed} from '../../types';
 
-const Dashboard = ({
-  friendId,
-  friendName,
-}: {
+interface DashboardProps {
   friendId?: number;
   friendName?: string;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({
+  friendId,
+  friendName
 }) => {
   const dispatch: AppDispatch = useDispatch();
   const userGoodDeeds = useSelector(
@@ -34,7 +37,7 @@ const Dashboard = ({
   }, [dispatch, userId, friendId]);
 
   const displayName = friendName || 'Your';
-  const goodDeeds = friendId
+  const goodDeeds: GoodDeed[] = friendId
     ? friendGoodDeeds.find((fd) => fd.friendId === friendId)?.deeds || []
     : userGoodDeeds;
   const title =
@@ -98,7 +101,7 @@ const Dashboard = ({
         </button>
       )}
       <GoodDeedsList
-        addedDeed={newDeed}
+        // addedDeed={newDeed}
         ownDashboard={displayName === 'Your'}
         goodDeeds={goodDeeds}
       />
@@ -108,7 +111,7 @@ const Dashboard = ({
             value={newDeed}
             onChange={handleNewDeedChange}
             className="w-full p-2 border border-gray-300 rounded"
-            rows="4"
+            rows={4}
             placeholder="Describe your good deed..."
           />
           <div className="flex justify-end mt-4">

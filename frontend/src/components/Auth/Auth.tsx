@@ -5,7 +5,7 @@ import SignUpForm from './SignUpForm/SignUpForm';
 const Auth = () => {
   const [activeTab, setActiveTab] = useState('signin');
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab: 'signin' | 'signup')  => {
     setActiveTab(tab);
   };
 

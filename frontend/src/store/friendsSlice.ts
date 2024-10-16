@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-
-interface Friend {
-  id: number;
-  username: string;
-  uniqueTag: string;
-}
-
-interface FriendDeed {
-  friendId: number;
-}
+import { Friend, FriendDeed } from '../types';
 
 interface FriendsState {
   friends: Friend[];

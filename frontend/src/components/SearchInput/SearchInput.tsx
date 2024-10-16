@@ -3,7 +3,11 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { searchFriends } from '../../store/friendsSlice';
 
-const SearchInput = () => {
+type SearchInputProps = {
+  onSearch: (searchTerm: string) => void;
+};
+
+const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const dispatch: AppDispatch = useDispatch();
 
@@ -13,6 +17,7 @@ const SearchInput = () => {
   };
 
   const handleSearchClick = () => {
+    onSearch(searchTerm); 
     dispatch(searchFriends(searchTerm));
     setSearchTerm('');
   };
