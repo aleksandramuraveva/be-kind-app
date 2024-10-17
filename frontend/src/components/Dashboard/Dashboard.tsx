@@ -86,6 +86,8 @@ const Dashboard: React.FC<DashboardProps> = ({
         <Image
           src="/images/wings.png"
           alt="Wings"
+          width={600} 
+          height={600}   
           className="filter brightness-110"
         />
       </div>
