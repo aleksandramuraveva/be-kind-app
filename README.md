@@ -1,6 +1,7 @@
 # be-kind-app
 
 This application allows users to manage their list of good deeds, register, authorize, update user data, and add friends using a unique tag. Built with a stack including TypeScript, NestJS, PostgreSQL, Docker, React, NextJS, Redux, and TailwindCSS.
+![Be Kind App1](https://github.com/user-attachments/assets/04127b3c-b208-455b-8317-46c1c2d25bf3)
 
 ## Prerequisites
 Docker
